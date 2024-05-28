@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'com.google.gms.google-services'
 }
 
 android {
@@ -62,17 +61,6 @@ dependencies {
     implementation libs.compose.materialIconsExtended
     implementation libs.compose.navigation
     implementation libs.compose.activity
-    implementation libs.androidx.material3
-    implementation libs.firebase.auth
-    implementation libs.firebase.database
-    implementation libs.androidx.material.icons.extended
-    implementation libs.androidx.material.icons.core
-    implementation libs.firebase.firestore.ktx
-    implementation libs.androidx.appcompat
-    implementation libs.androidx.preference
-    implementation libs.material
-    implementation libs.androidx.activity
-    implementation libs.androidx.constraintlayout
     androidTestImplementation libs.androidx.test.ext.junit
     androidTestImplementation libs.androidx.test.espresso.core
 }
