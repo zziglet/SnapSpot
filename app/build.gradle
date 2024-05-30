@@ -61,6 +61,7 @@ dependencies {
     implementation libs.compose.materialIconsExtended
     implementation libs.compose.navigation
     implementation libs.compose.activity
+    implementation libs.androidx.material3
     androidTestImplementation libs.androidx.test.ext.junit
     androidTestImplementation libs.androidx.test.espresso.core
 }
