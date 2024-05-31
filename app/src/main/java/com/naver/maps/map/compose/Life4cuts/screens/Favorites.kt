@@ -1,4 +1,4 @@
-package com.example.week09.example5.screens
+package com.naver.maps.map.compose.Life4cuts.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

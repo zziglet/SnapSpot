@@ -1,4 +1,4 @@
-package com.naver.maps.map.compose.demo.Life4cuts
+package com.naver.maps.map.compose.Life4cuts
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.naver.maps.map.compose.demo.Life4cuts.NavBarItems
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

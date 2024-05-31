@@ -1,4 +1,4 @@
-package com.example.week07.example5
+package com.naver.maps.map.compose.Life4cuts
 
 sealed class NavRoutes (val route: String) {
     object Map : NavRoutes("map")

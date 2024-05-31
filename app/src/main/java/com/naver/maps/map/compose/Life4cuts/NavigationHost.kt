@@ -1,13 +1,12 @@
-package com.naver.maps.map.compose.demo.Life4cuts
+package com.naver.maps.map.compose.Life4cuts
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.week07.example5.NavRoutes
-import com.example.week09.example5.screens.Contacts
-import com.example.week09.example5.screens.Favorites
-import com.naver.maps.map.compose.demo.Life4cuts.screens.NaverScreen
+import com.naver.maps.map.compose.Life4cuts.screens.Contacts
+import com.naver.maps.map.compose.Life4cuts.screens.Favorites
+import com.naver.maps.map.compose.Life4cuts.screens.NaverScreen
 
 
 @Composable
