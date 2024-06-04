@@ -1,4 +1,4 @@
-package com.naver.maps.map.compose.Life4cuts
+package com.naver.maps.map.compose.Life4cuts.navigation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
@@ -18,7 +18,6 @@ import com.naver.maps.map.compose.demo.Life4cuts.NavBarItems
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BottomNavigationBar(navController: NavController) {
-
     NavigationBar(
         modifier = Modifier
             .padding(start = 20.dp)

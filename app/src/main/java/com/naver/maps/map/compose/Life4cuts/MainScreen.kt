@@ -10,6 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.naver.maps.map.compose.Life4cuts.navigation.BottomNavigationBar
+import com.naver.maps.map.compose.Life4cuts.navigation.NagivationHost
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable

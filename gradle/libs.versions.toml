@@ -26,6 +26,7 @@ preference = "1.2.1"
 material = "1.4.0"
 activityVersion = "1.8.0"
 constraintlayout = "2.1.4"
+coilCompose = "2.6.0"
 
 [libraries]
 
@@ -83,5 +84,6 @@ androidx-preference = { group = "androidx.preference", name = "preference", vers
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activityVersion" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilCompose" }
 [plugins]
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinVersion" }

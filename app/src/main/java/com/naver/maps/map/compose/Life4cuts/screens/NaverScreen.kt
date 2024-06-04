@@ -15,6 +15,7 @@ import com.naver.maps.map.compose.MarkerState
 import com.naver.maps.map.compose.NaverMap
 import com.naver.maps.map.compose.rememberCameraPositionState
 
+//이 파일 나중에 Home.kt로 옮겨가야 할 것 같아요 근데 무서워서 냅뒀어요
 data class MarkerInfo(val position: LatLng, val caption: String)
 
 val markers = listOf(
