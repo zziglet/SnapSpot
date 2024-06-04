@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     ext.buildConfig = [
-            'minSdk'    : 21,
+            'minSdk'    : 23,
             'targetSdk' : 33,
             'compileSdk': 34
     ]
@@ -23,6 +23,7 @@ buildscript {
 
 plugins {
     id 'com.diffplug.spotless' version '5.12.4'
+    alias(libs.plugins.jetbrainsKotlinAndroid) apply false
 }
 
 apply plugin: 'org.jetbrains.dokka'

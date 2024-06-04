@@ -1,5 +1,6 @@
 package com.naver.maps.map.compose.Life4cuts.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,7 +26,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.auth.User
 import com.naver.maps.map.compose.Life4cuts.NavRoutes
 
 
@@ -56,7 +56,7 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = { loginUser(email, password, auth) },
+            onClick = { loginUser(email, password, auth, navController) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Login")
@@ -71,12 +71,17 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
     }
 }
 
-private fun loginUser(email: String, password: String, auth: FirebaseAuth) {
+private fun loginUser(
+    email: String,
+    password: String,
+    auth: FirebaseAuth,
+    navController: NavController,
+) {
     auth.signInWithEmailAndPassword(email, password)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 // Login successful
-
+                navController.navigate(NavRoutes.Map.route)
             } else {
                 // Login failed
             }
@@ -118,7 +123,13 @@ fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
     }
 }
 
-private fun registerUser(email: String, password: String, auth: FirebaseAuth, navController: NavController) {
+private fun registerUser(
+    email: String,
+    password: String,
+    auth: FirebaseAuth,
+    navController: NavController,
+) {
+
     auth.createUserWithEmailAndPassword(email, password)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -128,6 +139,7 @@ private fun registerUser(email: String, password: String, auth: FirebaseAuth, na
                 }
             } else {
                 // Registration failed
+
             }
         }
 }

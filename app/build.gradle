@@ -68,6 +68,11 @@ dependencies {
     implementation libs.androidx.material.icons.extended
     implementation libs.androidx.material.icons.core
     implementation libs.firebase.firestore.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.preference
+    implementation libs.material
+    implementation libs.androidx.activity
+    implementation libs.androidx.constraintlayout
     androidTestImplementation libs.androidx.test.ext.junit
     androidTestImplementation libs.androidx.test.espresso.core
 }
