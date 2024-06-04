@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "110316990905",
+    "project_id": "mobproject-a7a40",
+    "storage_bucket": "mobproject-a7a40.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110316990905:android:0515f0c3dcb5c47cfec668",
+        "android_client_info": {
+          "package_name": "com.naver.maps.map.compose"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3MPox5h7XFoX_9m9KBKzHPff-pLZEey0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

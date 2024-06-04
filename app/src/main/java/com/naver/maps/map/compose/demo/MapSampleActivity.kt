@@ -18,6 +18,7 @@ package com.naver.maps.map.compose.demo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.naver.maps.map.compose.Life4cuts.MainScreen
 
 class MapSampleActivity : ComponentActivity() {
 
@@ -25,7 +26,7 @@ class MapSampleActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NaverMapTheme {
-                NavGraph()
+                MainScreen()
             }
         }
     }
