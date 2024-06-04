@@ -65,6 +65,9 @@ dependencies {
     implementation libs.androidx.material3
     implementation libs.firebase.auth
     implementation libs.firebase.database
+    implementation libs.androidx.material.icons.extended
+    implementation libs.androidx.material.icons.core
+    implementation libs.firebase.firestore.ktx
     androidTestImplementation libs.androidx.test.ext.junit
     androidTestImplementation libs.androidx.test.espresso.core
 }

@@ -1,75 +1,136 @@
 package com.naver.maps.map.compose.Life4cuts.screens
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.auth.User
+import com.naver.maps.map.compose.Life4cuts.NavRoutes
+
 
 @Composable
-fun LoginScreen() {
-    val auth = FirebaseAuth.getInstance()
-    val email = remember { mutableStateOf("") }
-    val password = remember { mutableStateOf("") }
+fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
 
-    if (auth.currentUser != null) {
-        // 이미 로그인된 경우
-        Text("이미 로그인되었습니다.")
-    } else {
-        // 로그인되지 않은 경우
-        OutlinedTextField(
-            value = email.value,
-            onValueChange = { email.value = it },
-            label = { Text("이메일") }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center
+    ) {
+        TextField(
+            value = email,
+            onValueChange = { email = it },
+            label = { Text("Email") },
+            modifier = Modifier.fillMaxWidth()
         )
-        OutlinedTextField(
-            value = password.value,
-            onValueChange = { password.value = it },
-            label = { Text("비밀번호") }
+        Spacer(modifier = Modifier.height(8.dp))
+        TextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text("Password") },
+            modifier = Modifier.fillMaxWidth(),
+            visualTransformation = PasswordVisualTransformation()
         )
-        Button(onClick = {
-            auth.signInWithEmailAndPassword(email.value, password.value)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Text("로그인 성공!")
-                    } else {
-                        Text("로그인 실패: ${task.exception?.message}")
-                    }
-                }
-        }) {
-            Text("로그인")
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(
+            onClick = { loginUser(email, password, auth) },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Login")
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Button(
+            onClick = { navController.navigate("register") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Register")
         }
     }
 }
-@Composable
-fun RegisterScreen() {
-    val auth = FirebaseAuth.getInstance()
-    val email = remember { mutableStateOf("") }
-    val password = remember { mutableStateOf("") }
 
-    OutlinedTextField(
-        value = email.value,
-        onValueChange = { email.value = it },
-        label = { Text("이메일") }
-    )
-    OutlinedTextField(
-        value = password.value,
-        onValueChange = { password.value = it },
-        label = { Text("비밀번호") }
-    )
-    Button(onClick = {
-        auth.createUserWithEmailAndPassword(email.value, password.value)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Text("회원가입 성공!")
-                } else {
-                    Text("회원가입 실패: ${task.exception?.message}")
-                }
+private fun loginUser(email: String, password: String, auth: FirebaseAuth) {
+    auth.signInWithEmailAndPassword(email, password)
+        .addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Login successful
+
+            } else {
+                // Login failed
             }
-    }) {
-        Text("회원가입")
+        }
+}
+
+@Composable
+fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center
+    ) {
+        TextField(
+            value = email,
+            onValueChange = { email = it },
+            label = { Text("Email") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        TextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text("Password") },
+            modifier = Modifier.fillMaxWidth(),
+            visualTransformation = PasswordVisualTransformation()
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(
+            onClick = { registerUser(email, password, auth, navController) },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Register")
+        }
     }
 }
+
+private fun registerUser(email: String, password: String, auth: FirebaseAuth, navController: NavController) {
+    auth.createUserWithEmailAndPassword(email, password)
+        .addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                // Registration successful
+                navController.navigate(NavRoutes.Login.route) {
+                    popUpTo(NavRoutes.Register.route) { inclusive = true }
+                }
+            } else {
+                // Registration failed
+            }
+        }
+}
+
+
+
