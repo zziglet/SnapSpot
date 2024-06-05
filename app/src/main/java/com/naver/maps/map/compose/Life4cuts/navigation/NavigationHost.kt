@@ -5,7 +5,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.google.firebase.auth.FirebaseAuth
-import com.naver.maps.map.compose.Life4cuts.navigation.NavRoutes
 import com.naver.maps.map.compose.Life4cuts.screens.AlbumScreen
 import com.naver.maps.map.compose.Life4cuts.screens.LoginScreen
 import com.naver.maps.map.compose.Life4cuts.screens.NaverScreen
@@ -16,9 +15,6 @@ import com.naver.maps.map.compose.Life4cuts.screens.SettingScreen
 
 @Composable
 fun NagivationHost(navController: NavHostController, auth: FirebaseAuth) {
-    val upPress: () -> Unit = {
-        navController.navigateUp()
-    }
 
     NavHost(
         navController = navController,
