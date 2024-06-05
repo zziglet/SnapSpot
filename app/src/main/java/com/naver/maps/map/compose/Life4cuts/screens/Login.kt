@@ -75,7 +75,7 @@ private fun loginUser(
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 // Login successful
-                navController.navigate(NavRoutes.Map.route)
+                navController.navigate(NavRoutes.Home.route)
             } else {
                 // Login failed
             }

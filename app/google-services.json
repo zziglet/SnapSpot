@@ -26,6 +26,25 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:110316990905:android:ef5e4c5c89354ecffec668",
+        "android_client_info": {
+          "package_name": "com.naver.maps.map.compose.Life4cuts"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3MPox5h7XFoX_9m9KBKzHPff-pLZEey0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:110316990905:android:770a3a1ce85757c6fec668",
         "android_client_info": {
           "package_name": "com.naver.maps.map.compose.demo"

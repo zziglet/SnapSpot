@@ -30,7 +30,7 @@ fun NagivationHost(navController: NavHostController, auth: FirebaseAuth) {
         composable(NavRoutes.Register.route){
             RegisterScreen(navController,auth)
         }
-        composable(NavRoutes.Map.route){
+        composable(NavRoutes.Home.route){
             NaverScreen()
         }
         composable(NavRoutes.Photo.route){
