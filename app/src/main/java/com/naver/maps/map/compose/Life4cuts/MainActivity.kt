@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import com.naver.maps.map.compose.demo.NaverMapTheme
 import androidx.activity.compose.setContent
+import androidx.compose.ui.graphics.Color
+import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 
 
