@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material.Divider
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -66,7 +67,7 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
             style = TextStyle(
                 fontSize = 12.sp,
                 lineHeight = 18.sp,
-                //fontFamily = FontFamily(Font(R.font.inter)),
+                fontFamily = FontFamily(Font(R.font.inter)),
                 fontWeight = FontWeight(400),
                 color = Color(0xFF828282),
                 textAlign = TextAlign.Center
@@ -77,30 +78,30 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
             style = TextStyle(
                 fontSize = 48.sp,
                 lineHeight = 72.sp,
-                //fontFamily = FontFamily(Font(R.font.judson)),
+                fontFamily = FontFamily(Font(R.font.judson)),
                 fontWeight = FontWeight(400),
                 fontStyle = FontStyle.Italic,
                 color = Color(0xFF000000),
                 textAlign = TextAlign.Center
             )
         )
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(50.dp))
         Image(
             modifier = Modifier.height(90.dp),
             painter = painterResource(id = R.drawable.loginimg),
             contentDescription = "image description",
             contentScale = ContentScale.Crop
         )
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(50.dp))
         Text(
             text = "Create an account",
             style = TextStyle(
                 fontSize = 18.sp,
                 lineHeight = 27.sp,
-                //fontFamily = FontFamily(Font(R.font.inter)),
+                fontFamily = FontFamily(Font(R.font.inter)),
                 fontWeight = FontWeight(600),
                 color = Color(0xFF000000),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
         )
         Text(
@@ -108,18 +109,18 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
             style = TextStyle(
                 fontSize = 14.sp,
                 lineHeight = 21.sp,
-                //fontFamily = FontFamily(Font(R.font.inter)),
+                fontFamily = FontFamily(Font(R.font.inter)),
                 fontWeight = FontWeight(400),
                 color = Color(0xFF000000),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
         )
         Spacer(modifier = Modifier.height(40.dp))
         BasicTextField(
             modifier = Modifier
                 .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(7.dp))
-                .width(300.dp)
-                .height(27.dp)
+                .width(327.dp)
+                .height(40.dp)
                 .background(Color.White),
             value = email,
             onValueChange = { email = it },
@@ -129,26 +130,26 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = if (email.isEmpty()) "email@domain.com" else "",
+                        text = "email@domain.com",
                         style = TextStyle(
-                            fontSize = 12.sp,
+                            fontSize = 14.sp,
                             lineHeight = 19.6.sp,
+                            fontFamily = FontFamily(Font(R.font.inter)),
                             fontWeight = FontWeight(400),
-                            color = Color(0xFF828282),
-                            textAlign = TextAlign.Center
-                        )
+                            color = Color(0xFF828282)
+                            )
                     )
                     Spacer(modifier = Modifier.width(width = 8.dp))
                     innerTextField()
                 }
             }
         )
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         BasicTextField(
             modifier = Modifier
                 .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(7.dp))
-                .width(300.dp)
-                .height(27.dp)
+                .width(327.dp)
+                .height(40.dp)
                 .background(Color.White),
             value = password,
             onValueChange = { password = it },
@@ -161,11 +162,11 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
                     Text(
                         text = if (password.isEmpty()) "password" else "",
                         style = TextStyle(
-                            fontSize = 12.sp,
+                            fontSize = 14.sp,
                             lineHeight = 19.6.sp,
+                            fontFamily = FontFamily(Font(R.font.inter)),
                             fontWeight = FontWeight(400),
-                            color = Color(0xFF828282),
-                            textAlign = TextAlign.Center
+                            color = Color(0xFF828282)
                         )
                     )
                     Spacer(modifier = Modifier.width(width = 8.dp))
@@ -175,7 +176,9 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
         )
         Spacer(modifier = Modifier.height(40.dp))
         Button(
-            modifier = Modifier.width(300.dp),
+            modifier = Modifier
+                .width(327.dp)
+                .height(40.dp),
             onClick = {
                 loginUser(email, password, auth, navController) { error ->
                     errorMessage = error
@@ -189,7 +192,17 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
             ),
             shape = RoundedCornerShape(12.dp)
         ) {
-            Text("Sign In")
+            Text(
+                text = "Sign up",
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    lineHeight = 19.6.sp,
+                    fontFamily = FontFamily(Font(R.font.inter)),
+                    fontWeight = FontWeight(500),
+                    color = Color(0xFFFFFFFF),
+
+                    )
+            )
         }
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -199,20 +212,39 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
                 color = Color.Red,
             )
         }
-        Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = "or the account already",
-            style = TextStyle(
-                fontSize = 14.sp,
-                lineHeight = 19.6.sp,
-                fontWeight = FontWeight(400),
-                color = Color(0xFF828282),
-                textAlign = TextAlign.Center
+        Spacer(modifier = Modifier.height(24.dp))
+        Row(
+            modifier = Modifier
+                .width(327.dp)
+                .height(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Divider(modifier = Modifier
+                .width(80.5.dp)
+                .height(1.dp)
+                .background(color = Color(0xFFE6E6E6)))
+            Text(
+                text = "or the account already",
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    lineHeight = 19.6.sp,
+                    fontFamily = FontFamily(Font(R.font.inter)),
+                    fontWeight = FontWeight(400),
+                    color = Color(0xFF828282),
+                    textAlign = TextAlign.Center,
+                )
             )
-        )
-        Spacer(modifier = Modifier.height(10.dp))
+            Divider(modifier = Modifier
+                .width(80.5.dp)
+                .height(1.dp)
+                .background(color = Color(0xFFE6E6E6)))
+        }
+        Spacer(modifier = Modifier.height(24.dp))
         Button(
-            modifier = Modifier.width(300.dp),
+            modifier = Modifier
+                .width(327.dp)
+                .height(40.dp),
             onClick = { navController.navigate("register") },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.LightGray,
@@ -222,7 +254,17 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
             ),
             shape = RoundedCornerShape(12.dp)
         ) {
-            Text("Sign Up")
+            Text(
+                text = "Sign in",
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    lineHeight = 19.6.sp,
+                    fontFamily = FontFamily(Font(R.font.inter)),
+                    fontWeight = FontWeight(500),
+                    color = Color(0xFF000000),
+
+                    )
+            )
         }
     }
 }

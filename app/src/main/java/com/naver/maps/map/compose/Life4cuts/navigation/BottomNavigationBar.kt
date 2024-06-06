@@ -19,7 +19,6 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.naver.maps.map.compose.demo.Life4cuts.NavBarItems
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BottomNavigationBar(navController: NavController) {
     NavigationBar(

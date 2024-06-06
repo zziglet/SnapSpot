@@ -5,6 +5,7 @@ import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Map
+import androidx.compose.material.icons.filled.NoAdultContent
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
@@ -12,13 +13,14 @@ import androidx.compose.material.icons.outlined.CameraAlt
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Map
+import androidx.compose.material.icons.outlined.Outbond
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 
 data class BarItem (val title :String, val selectIcon: ImageVector, val onSelectedIcon :ImageVector, val route:String)
-
+data class topBarItem (val title:String, val route:String)
 object NavBarItems{
     val BarItems = listOf(
         BarItem(
@@ -44,6 +46,20 @@ object NavBarItems{
             selectIcon = Icons.Default.Settings,
             onSelectedIcon = Icons.Outlined.Settings,
             route = "Settings"
+        )
+    )
+    val albumtopBarItems = listOf(
+        topBarItem(
+            title = "MyAlbum",
+            route = "MyAlbum"
+        ),
+        topBarItem(
+            title = "Place",
+            route = "Place"
+        ),
+        topBarItem(
+            title = "Photo",
+            route = "Photo"
         )
 
     )
