@@ -54,7 +54,7 @@ import com.naver.maps.map.compose.demo.R
 fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-
+    var errorMessage by remember { mutableStateOf("") }
     Column(
         modifier = Modifier
             .background(color = Color(0xFFFFFFFF))
@@ -128,13 +128,16 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
                     modifier = Modifier.padding(start = 5.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("email@domain.com",
+                    Text(
+                        text = if (email.isEmpty()) "email@domain.com" else "",
                         style = TextStyle(
                             fontSize = 12.sp,
                             lineHeight = 19.6.sp,
                             fontWeight = FontWeight(400),
                             color = Color(0xFF828282),
-                            textAlign = TextAlign.Center))
+                            textAlign = TextAlign.Center
+                        )
+                    )
                     Spacer(modifier = Modifier.width(width = 8.dp))
                     innerTextField()
                 }
@@ -155,13 +158,16 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
                     modifier = Modifier.padding(start = 5.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("password",
+                    Text(
+                        text = if (password.isEmpty()) "password" else "",
                         style = TextStyle(
                             fontSize = 12.sp,
                             lineHeight = 19.6.sp,
                             fontWeight = FontWeight(400),
                             color = Color(0xFF828282),
-                            textAlign = TextAlign.Center))
+                            textAlign = TextAlign.Center
+                        )
+                    )
                     Spacer(modifier = Modifier.width(width = 8.dp))
                     innerTextField()
                 }
@@ -170,15 +176,28 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
         Spacer(modifier = Modifier.height(40.dp))
         Button(
             modifier = Modifier.width(300.dp),
-            onClick = { loginUser(email, password, auth, navController) },
+            onClick = {
+                loginUser(email, password, auth, navController) { error ->
+                    errorMessage = error
+                }
+            },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Black,
                 contentColor = Color.White,
                 disabledContainerColor = Color.DarkGray,
-                disabledContentColor = Color.White),
+                disabledContentColor = Color.White
+            ),
             shape = RoundedCornerShape(12.dp)
         ) {
-            Text("Sign up")
+            Text("Sign In")
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+
+        if (errorMessage.isNotEmpty()) {
+            Text(
+                text = errorMessage,
+                color = Color.Red,
+            )
         }
         Spacer(modifier = Modifier.height(10.dp))
         Text(
@@ -199,10 +218,11 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
                 containerColor = Color.LightGray,
                 contentColor = Color.Black,
                 disabledContainerColor = Color.DarkGray,
-                disabledContentColor = Color.White),
+                disabledContentColor = Color.White
+            ),
             shape = RoundedCornerShape(12.dp)
         ) {
-            Text("Sign in")
+            Text("Sign Up")
         }
     }
 }
@@ -212,6 +232,7 @@ private fun loginUser(
     password: String,
     auth: FirebaseAuth,
     navController: NavController,
+    onError: (String) -> Unit,
 ) {
     auth.signInWithEmailAndPassword(email, password)
         .addOnCompleteListener { task ->
@@ -220,6 +241,7 @@ private fun loginUser(
                 navController.navigate(NavRoutes.Home.route)
             } else {
                 // Login failed
+                onError("이메일 또는 비밀번호를 확인하세요")
             }
         }
 }
@@ -228,6 +250,26 @@ private fun loginUser(
 fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var emailError by remember {
+        mutableStateOf<String?>(null)
+    }
+    var passwordError by remember {
+        mutableStateOf<String?>(null)
+    }
+
+    fun validateInput() {
+        emailError = if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            null
+        } else {
+            "유효한 이메일을 입력하세요."
+        }
+
+        passwordError = if (password.length >= 6) {
+            null
+        } else {
+            "비밀번호는 6자 이상이어야 합니다."
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -289,6 +331,7 @@ fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
                 textAlign = TextAlign.Center
             )
         )
+
         Spacer(modifier = Modifier.height(40.dp))
         BasicTextField(
             modifier = Modifier
@@ -303,18 +346,28 @@ fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
                     modifier = Modifier.padding(start = 5.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("email@domain.com",
+                    Text(
+                        text = if (email.isEmpty()) "email@domain.com" else "",
                         style = TextStyle(
                             fontSize = 12.sp,
                             lineHeight = 19.6.sp,
                             fontWeight = FontWeight(400),
                             color = Color(0xFF828282),
-                            textAlign = TextAlign.Center))
+                            textAlign = TextAlign.Center
+                        )
+                    )
                     Spacer(modifier = Modifier.width(width = 8.dp))
                     innerTextField()
                 }
             }
         )
+        if (emailError != null) {
+            Text(
+                text = emailError!!,
+                color = Color.Red,
+                style = TextStyle(fontSize = 12.sp)
+            )
+        }
         Spacer(modifier = Modifier.height(12.dp))
         BasicTextField(
             modifier = Modifier
@@ -330,27 +383,42 @@ fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
                     modifier = Modifier.padding(start = 5.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("password",
+                    Text(
+                        text = if (password.isEmpty()) "password" else "",
                         style = TextStyle(
                             fontSize = 12.sp,
                             lineHeight = 19.6.sp,
                             fontWeight = FontWeight(400),
                             color = Color(0xFF828282),
-                            textAlign = TextAlign.Center))
+                            textAlign = TextAlign.Center
+                        )
+                    )
                     Spacer(modifier = Modifier.width(width = 8.dp))
                     innerTextField()
                 }
             }
         )
+        if (passwordError != null) {
+            Text(
+                text = passwordError!!,
+                color = Color.Red,
+                style = TextStyle(fontSize = 12.sp)
+            )
+        }
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             modifier = Modifier.width(300.dp),
-            onClick = { registerUser(email, password, auth, navController) },
+            onClick = {
+                validateInput()
+                if (emailError == null && passwordError == null)
+                    registerUser(email, password, auth, navController)
+            },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.LightGray,
                 contentColor = Color.Black,
                 disabledContainerColor = Color.DarkGray,
-                disabledContentColor = Color.White),
+                disabledContentColor = Color.White
+            ),
             shape = RoundedCornerShape(12.dp)
         ) {
             Text("Sign in")
@@ -364,7 +432,6 @@ private fun registerUser(
     auth: FirebaseAuth,
     navController: NavController,
 ) {
-
     auth.createUserWithEmailAndPassword(email, password)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
