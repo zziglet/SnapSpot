@@ -1,14 +1,18 @@
 package com.naver.maps.map.compose.Life4cuts.navigation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -20,14 +24,16 @@ import com.naver.maps.map.compose.demo.Life4cuts.NavBarItems
 fun BottomNavigationBar(navController: NavController) {
     NavigationBar(
         modifier = Modifier
-            .padding(start = 20.dp)
-            .padding(end = 20.dp)
+            .background(color = Color.White),
+        contentColor = colorResource(id = android.R.color.white),
+        containerColor = colorResource(id = android.R.color.white),
     ) {
         val backStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = backStackEntry?.destination?.route
 
         NavBarItems.BarItems.forEach { navItem ->
             NavigationBarItem(
+                modifier = Modifier.background(color = Color.White),
                 selected = currentRoute == navItem.route,
                 onClick = {
                     navController.navigate(navItem.route)
@@ -45,7 +51,16 @@ fun BottomNavigationBar(navController: NavController) {
                 },
                 label = {
                     Text(text = navItem.title)
-                }
+                },
+                colors = NavigationBarItemColors(
+                    selectedIconColor = Color.Black,
+                    unselectedIconColor = Color.LightGray,
+                    disabledIconColor = Color.LightGray,
+                    selectedIndicatorColor = Color.White,
+                    disabledTextColor = Color.LightGray,
+                    unselectedTextColor = Color.LightGray,
+                    selectedTextColor = Color.Black
+                )
             )
         }
     }
