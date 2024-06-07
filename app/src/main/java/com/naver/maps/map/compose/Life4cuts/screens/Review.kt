@@ -31,7 +31,7 @@ import com.naver.maps.map.compose.demo.R
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SnapSpotApp() {
+fun ReviewPage() {
     Scaffold(
         topBar = { TopAppBar(title = { Text("SnapSpot") }) },
     ) {
@@ -41,14 +41,14 @@ fun SnapSpotApp() {
                 .padding(16.dp)
         ) {
             item { Spacer(modifier = Modifier.height(56.dp)) }
-            item { HowSection() }
-            item { ReviewSection() }
+            item { ShowPhotoexample() }
+            item { ShowReview() }
         }
     }
 }
 
 @Composable
-fun HowSection() {
+fun ShowPhotoexample() {
     Column (
         modifier = Modifier
             .fillMaxWidth()
@@ -77,7 +77,7 @@ fun HowSection() {
 }
 
 @Composable
-fun ReviewSection() {
+fun ShowReview() {
     Column {
         Text(text = "Review", fontWeight = FontWeight.Bold, fontSize = 18.sp)
         Spacer(modifier = Modifier.height(8.dp))
