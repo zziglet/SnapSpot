@@ -46,9 +46,7 @@ import com.naver.maps.map.compose.demo.R
 import com.naver.maps.map.compose.rememberCameraPositionState
 
 //이 파일 나중에 Home.kt로 옮겨가야 할 것 같아요 근데 무서워서 냅뒀어요
-object Variables {
-    val SpacingSM: Dp = 32.dp
-}
+
 @Composable
 @OptIn(ExperimentalNaverMapApi::class)
 fun HomeScreen() {
@@ -69,7 +67,7 @@ fun HomeScreen() {
                 .width(332.dp)
                 .height(171.dp)
                 .background(color = Color.White, shape = RoundedCornerShape(size = 12.dp))
-                .padding(start = 19.dp, top = 16.dp, end = Variables.SpacingSM, bottom = Variables.SpacingSM),
+                .padding(start = 19.dp, top = 16.dp, end = 16.dp),
             verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.Top),
             horizontalAlignment = Alignment.Start
         ) {
@@ -96,7 +94,7 @@ fun HomeScreen() {
             Row(
                 modifier = Modifier
                     .width(230.dp)
-                    .height(100.dp),
+                    .height(130.dp),
                 horizontalArrangement = Arrangement.spacedBy(15.dp, Alignment.Start),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -121,8 +119,7 @@ fun HomeScreen() {
                             lineHeight = 24.sp,
                             fontFamily = FontFamily(Font(R.font.inter)),
                             fontWeight = FontWeight(500),
-                            color = Color(0xFF000000)),
-                        modifier = Modifier.padding(8.dp)
+                            color = Color(0xFF000000))
                     )
                     Text(
                         text = selectedMarkerInfo?.address ?: "서울특별시 광진구 화양동",
@@ -138,7 +135,7 @@ fun HomeScreen() {
                 }
             }
         }
-        Spacer(modifier = Modifier.height(33.dp))
+        Spacer(modifier = Modifier.height(30.dp))
         NaverMap(
             cameraPositionState = cameraPositionState,
             modifier = Modifier
