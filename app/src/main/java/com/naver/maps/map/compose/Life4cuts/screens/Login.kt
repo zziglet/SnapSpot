@@ -130,7 +130,7 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "email@domain.com",
+                        text = if (email.isEmpty()) "email@domain.com" else "",
                         style = TextStyle(
                             fontSize = 14.sp,
                             lineHeight = 19.6.sp,
