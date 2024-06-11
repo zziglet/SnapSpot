@@ -47,12 +47,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.naver.maps.map.compose.Life4cuts.navigation.NavRoutes
 import com.naver.maps.map.compose.demo.R
 
 
 @Composable
-fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
+fun LoginScreen(navController: NavController, auth: FirebaseAuth , firestore: FirebaseFirestore) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
@@ -180,7 +181,7 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth) {
                 .width(327.dp)
                 .height(40.dp),
             onClick = {
-                loginUser(email, password, auth, navController) { error ->
+                loginUser(email, password, auth, navController , firestore) { error ->
                     errorMessage = error
                 }
             },
@@ -274,6 +275,7 @@ private fun loginUser(
     password: String,
     auth: FirebaseAuth,
     navController: NavController,
+    firestore: FirebaseFirestore,
     onError: (String) -> Unit,
 ) {
     auth.signInWithEmailAndPassword(email, password)
@@ -281,12 +283,30 @@ private fun loginUser(
             if (task.isSuccessful) {
                 // Login successful
                 navController.navigate(NavRoutes.Home.route)
+                val user = auth.currentUser
+                user?.let {
+                    saveUserData(it.uid,"sampledata" , firestore)
+                }
             } else {
                 // Login failed
                 onError("이메일 또는 비밀번호를 확인하세요")
             }
         }
 }
+
+private fun saveUserData(uid: String, data: String , firestore: FirebaseFirestore) {
+    val userCollection = firestore.collection("users").document(uid).collection("userData")
+    val dataMap = hashMapOf("dataField" to data)
+
+    userCollection.add(dataMap)
+        .addOnSuccessListener {
+            // 데이터 저장 성공
+        }
+        .addOnFailureListener {
+            // 데이터 저장 실패
+        }
+}
+
 
 @Composable
 fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {

@@ -10,6 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.naver.maps.map.compose.Life4cuts.screens.AlbumScreen
 import com.naver.maps.map.compose.Life4cuts.screens.HomeScreen
 import com.naver.maps.map.compose.Life4cuts.screens.LoginScreen
@@ -19,14 +20,14 @@ import com.naver.maps.map.compose.Life4cuts.screens.RegisterScreen
 
 
 @Composable
-fun NagivationHost(navController: NavHostController, auth: FirebaseAuth) {
+fun NagivationHost(navController: NavHostController, auth: FirebaseAuth , firestore: FirebaseFirestore) {
 
     NavHost(
         navController = navController,
         startDestination = NavRoutes.Login.route
     ){
         composable(NavRoutes.Login.route){
-            LoginScreen(navController,auth)
+            LoginScreen(navController,auth , firestore)
         }
         composable(NavRoutes.Register.route){
             RegisterScreen(navController,auth)
@@ -35,7 +36,7 @@ fun NagivationHost(navController: NavHostController, auth: FirebaseAuth) {
             HomeScreen()
         }
         composable(NavRoutes.Photo.route){
-            PhotoScreen()
+            PhotoScreen(auth,firestore)
         }
         composable(NavRoutes.Album.route){
             AlbumScreen()

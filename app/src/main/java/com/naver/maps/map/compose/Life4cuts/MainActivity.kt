@@ -7,16 +7,19 @@ import androidx.activity.compose.setContent
 import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class MainActivity : ComponentActivity() {
     private lateinit var auth:FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
         setContent {
             NaverMapTheme {
-                MainScreen(auth)
+                MainScreen(auth,firestore)
             }
         }
     }

@@ -100,7 +100,7 @@ fun HomeScreen() {
             ) {
                 Image(
                     painter = painterResource(
-                        id = selectedMarkerInfo?.img ?: R.drawable.ic_info_black_24dp
+                        id = selectedMarkerInfo?.imgId ?: R.drawable.ic_info_black_24dp
                     ),
                     contentDescription = "img",
                     contentScale = ContentScale.Crop,

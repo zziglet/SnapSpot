@@ -6,7 +6,7 @@ data class PhotoBoothInfo(
     val position: LatLng,
     val caption: String,
     val address: String,
-    val img: Int,
+    val imgId: Int,
     val title: String,
     val hashtag: String
 )

@@ -20,6 +20,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.naver.maps.map.compose.Life4cuts.navigation.BottomNavigationBar
 import com.naver.maps.map.compose.Life4cuts.navigation.NagivationHost
 import com.naver.maps.map.compose.Life4cuts.navigation.NavRoutes
@@ -28,7 +29,7 @@ import com.naver.maps.map.compose.Life4cuts.screens.LoginScreen
 import com.naver.maps.map.compose.demo.R
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(auth: FirebaseAuth) {
+fun MainScreen(auth: FirebaseAuth,firestore:FirebaseFirestore) {
 
     val navController = rememberNavController()
     Scaffold(
@@ -43,7 +44,7 @@ fun MainScreen(auth: FirebaseAuth) {
         Column(modifier = Modifier
             .padding(contentPadding)
             .background(color = Color.White)) {
-            NagivationHost(navController = navController,auth)
+            NagivationHost(navController = navController,auth , firestore)
         }
     }
 }
