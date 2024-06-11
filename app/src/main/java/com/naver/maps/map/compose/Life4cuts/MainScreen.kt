@@ -26,11 +26,10 @@ import com.naver.maps.map.compose.Life4cuts.navigation.NavRoutes
 import com.naver.maps.map.compose.Life4cuts.navigation.TopNavigationBar
 import com.naver.maps.map.compose.Life4cuts.screens.LoginScreen
 import com.naver.maps.map.compose.demo.R
-
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(auth: FirebaseAuth) {
-    var auth = FirebaseAuth.getInstance()
+
     val navController = rememberNavController()
     Scaffold(
         modifier = Modifier.background(color = Color.White),
