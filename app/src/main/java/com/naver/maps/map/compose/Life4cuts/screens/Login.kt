@@ -278,6 +278,11 @@ private fun loginUser(
     firestore: FirebaseFirestore,
     onError: (String) -> Unit,
 ) {
+    // 이메일과 비밀번호가 비어 있는지 확인
+    if (email.isEmpty() || password.isEmpty()) {
+        onError("이메일 또는 비밀번호를 확인하세요")
+        return
+    }
     auth.signInWithEmailAndPassword(email, password)
         .addOnCompleteListener { task ->
             if (task.isSuccessful) {
