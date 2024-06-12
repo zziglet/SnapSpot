@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
 
 //(시현님 파트인 것 같아요)
@@ -24,6 +25,7 @@ val db = Firebase.firestore
 data class PhotoInfo(val url: String, val description: String, val email: String)
 
 fun AddPhotoInfo(photoInfo: PhotoInfo) {
+    val user = FirebaseAuth.getInstance().currentUser
     db.collection("photos").add(photoInfo)
         .addOnSuccessListener { documentReference ->
             Log.d("Firestore", "DocumentSnapshot written with email: ${documentReference.id}")

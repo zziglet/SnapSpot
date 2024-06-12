@@ -3,6 +3,7 @@ package com.naver.maps.map.compose.Life4cuts.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -67,9 +68,14 @@ fun HomeScreen() {
                 .width(332.dp)
                 .height(171.dp)
                 .background(color = Color.White, shape = RoundedCornerShape(size = 12.dp))
-                .padding(start = 19.dp, top = 16.dp, end = 16.dp),
+                .padding(start = 19.dp, top = 16.dp, end = 16.dp)
+                .clickable {
+                           /*
+                            배너 클릭시 이동할 화면 navigate 코드 작성해주시면 됩니다.
+                            */
+                },
             verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.Top),
-            horizontalAlignment = Alignment.Start
+            horizontalAlignment = Alignment.Start,
         ) {
             Text(
                 text = "SnapSpot",
