@@ -34,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.compose.CameraPositionState
@@ -50,7 +51,7 @@ import com.naver.maps.map.compose.rememberCameraPositionState
 
 @Composable
 @OptIn(ExperimentalNaverMapApi::class)
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     val konkuk = LatLng(37.540325, 127.069429)
     val cameraPositionState: CameraPositionState = rememberCameraPositionState {
         // 카메라 초기 위치를 설정합니다.
@@ -70,9 +71,11 @@ fun HomeScreen() {
                 .background(color = Color.White, shape = RoundedCornerShape(size = 12.dp))
                 .padding(start = 19.dp, top = 16.dp, end = 16.dp)
                 .clickable {
-                           /*
-                            배너 클릭시 이동할 화면 navigate 코드 작성해주시면 됩니다.
-                            */
+                    navController.navigate(
+                        "review/${selectedMarkerInfo?.caption}/${selectedMarkerInfo?.address}" +
+                            "/${selectedMarkerInfo?.imgId}/${selectedMarkerInfo?.title}" +
+                            "/${selectedMarkerInfo?.hashtag}"
+                    )
                 },
             verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.Top),
             horizontalAlignment = Alignment.Start,
