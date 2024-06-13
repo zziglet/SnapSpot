@@ -36,7 +36,56 @@ val markers = listOf(
         imgId = R.drawable.photoism,
         title = "마달리 스튜디오",
         hashtag = "#PhotoBooth.kt에서 수정가능",
-    )
+    ),
+    PhotoBoothInfo(
+        position = LatLng(37.5424589, 127.0687323),
+        caption = "캔디포토 건대점",
+        address = "서울 광진구 아차산로29길 35 1층",
+        imgId = R.drawable.candyphoto,
+        title = "캔디포토",
+        hashtag = "#PhotoBooth.kt에서 수정가능",
+    ),
+    PhotoBoothInfo(
+        position = LatLng(37.5413686, 127.0688388),
+        caption = "모노맨션 건대점",
+        address = "서울 광진구 동일로22길 81 1층 101호, 104호",
+        imgId = R.drawable.monomansion,
+        title = "모노맨션",
+        hashtag = "#PhotoBooth.kt에서 수정가능",
+    ),
+    PhotoBoothInfo(
+        position = LatLng(37.5417460, 127.0667515),
+        caption = "포토이즘컬러드 건대점",
+        address = "서울 광진구 아차산로25길 8 1층",
+        imgId = R.drawable.photoismcolored,
+        title = "포토이즘 컬러드",
+        hashtag = "#PhotoBooth.kt에서 수정가능",
+    ),
+    PhotoBoothInfo(
+        position = LatLng(37.5412631, 127.0681485),
+        caption = "포토이즘박스 건대점",
+        address = "서울 광진구 아차산로29길 7 1층",
+        imgId = R.drawable.photoismbox,
+        title = "포토이즘 박스",
+        hashtag = "#PhotoBooth.kt에서 수정가능",
+    ),
+    PhotoBoothInfo(
+        position = LatLng(37.5419522, 127.0684886),
+        caption = "에어픽 건대점",
+        address = "서울 광진구 아차산로29길 23 1층",
+        imgId = R.drawable.airpick,
+        title = "에어픽",
+        hashtag = "#PhotoBooth.kt에서 수정가능",
+    ),
+    PhotoBoothInfo(
+        position = LatLng(37.5423973, 127.0700590),
+        caption = "셀픽스 건대점",
+        address = "서울 광진구 동일로24길 94 1층",
+        imgId = R.drawable.selpix,
+        title = "셀픽스",
+        hashtag = "#PhotoBooth.kt에서 수정가능",
+    ),
+
 )
 
 
