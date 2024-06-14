@@ -157,25 +157,3 @@ fun AlbumScreen() {
     }
 }
 
-@Composable
-fun bookmarkPhotoScreen(){
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-    ){
-        Text("bookmarkphoto")
-    }
-
-}
-
-@Composable
-fun bookmarkPlaceScreen(){
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-    ){
-        Text("bookmarkplace")
-    }
-}

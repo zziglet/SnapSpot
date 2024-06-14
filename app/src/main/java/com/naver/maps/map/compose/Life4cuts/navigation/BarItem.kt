@@ -4,9 +4,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Map
-import androidx.compose.material.icons.filled.NoAdultContent
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.CameraAlt
@@ -58,8 +55,8 @@ object NavBarItems{
             route = "Place"
         ),
         topBarItem(
-            title = "Photo",
-            route = "Photo"
+            title = "Bookmark",
+            route = "Bookmark"
         )
 
     )

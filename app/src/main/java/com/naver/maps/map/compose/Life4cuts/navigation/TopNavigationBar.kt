@@ -43,19 +43,19 @@ fun TopNavigationBar(navController: NavController) {
     ) {
         val backStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = backStackEntry?.destination?.route
-        if(!currentRoute.equals("Login")){
-            if(currentRoute.equals("Album")){
+        if(!(currentRoute.equals("Login") || currentRoute.equals("Register"))){
+            if(currentRoute.equals("Album") || currentRoute.equals("MyAlbum") || currentRoute.equals
+                    ("Bookmark") || currentRoute.equals("Place")){
                 NavBarItems.albumtopBarItems.forEach { navItem ->
                     NavigationBarItem(
-                        modifier = Modifier.background(color = Color.White)
-                            .padding(end = 30.dp),
+                        modifier = Modifier.background(color = Color.White),
                         selected = currentRoute == navItem.route,
                         onClick = {
-                           /* navController.navigate(navItem.route)
+                            navController.navigate(navItem.route)
                             {
                                 popUpTo(navController.graph.findStartDestination().id) {
                                 }
-                            }*/
+                            }
                         },
                         icon = {
                         },

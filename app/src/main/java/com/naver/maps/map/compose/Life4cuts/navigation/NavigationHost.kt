@@ -4,18 +4,27 @@ import AccountSettingsScreen
 import FavoritesScreen
 import ProfileScreen
 import PublicSettingScreen
+import ReviewViewModel
 import SettingsScreen
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.naver.maps.map.compose.Life4cuts.screens.AlbumScreen
+import com.naver.maps.map.compose.Life4cuts.screens.BookmarkScreen
+import com.naver.maps.map.compose.Life4cuts.screens.FavoriteViewModel
 import com.naver.maps.map.compose.Life4cuts.screens.HomeScreen
 import com.naver.maps.map.compose.Life4cuts.screens.LoginScreen
 import com.naver.maps.map.compose.Life4cuts.screens.PhotoScreen
+import com.naver.maps.map.compose.Life4cuts.screens.PlaceScreen
 import com.naver.maps.map.compose.Life4cuts.screens.RegisterScreen
+import com.naver.maps.map.compose.Life4cuts.screens.ReviewScreen
+
 //import com.naver.maps.map.compose.Life4cuts.screens.SettingsScreen
 
 
@@ -33,13 +42,42 @@ fun NagivationHost(navController: NavHostController, auth: FirebaseAuth , firest
             RegisterScreen(navController,auth)
         }
         composable(NavRoutes.Home.route){
-            HomeScreen()
+            HomeScreen(navController)
         }
         composable(NavRoutes.Photo.route){
             PhotoScreen(auth,firestore)
         }
         composable(NavRoutes.Album.route){
             AlbumScreen()
+        }
+        composable(NavRoutes.Place.route){
+            val viewModel: FavoriteViewModel = viewModel()
+            PlaceScreen(navController, viewModel, firestore)
+        }
+        composable(NavRoutes.Bookmark.route){
+            BookmarkScreen()
+        }
+        composable(NavRoutes.MyAlbum.route){
+            AlbumScreen()
+        }
+        composable(
+            route = NavRoutes.Review.route,
+            arguments = listOf(
+                navArgument("caption") { type = NavType.StringType },
+                navArgument("address") { type = NavType.StringType },
+                navArgument("img") { type = NavType.IntType },
+                navArgument("title") { type = NavType.StringType },
+                navArgument("hashtag") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val caption = backStackEntry.arguments?.getString("caption") ?: ""
+            val address = backStackEntry.arguments?.getString("address") ?: ""
+            val img = backStackEntry.arguments?.getInt("img") ?: 0
+            val title = backStackEntry.arguments?.getString("title") ?: ""
+            val hashtag = backStackEntry.arguments?.getString("hashtag") ?: ""
+            val
+                viewModel: ReviewViewModel = viewModel()
+            ReviewScreen(caption, address, img, title, hashtag, viewModel, navController, firestore)
         }
 
         //
