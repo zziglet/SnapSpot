@@ -22,8 +22,11 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
@@ -48,8 +51,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -95,7 +101,7 @@ fun ReviewScreen(
     ) {
         item { ShowPhotoBooth(userId, caption, address, imgId, title, hashtag, firestore) }
         item { Spacer(modifier = Modifier.height(16.dp)) }
-        item { ShowPhotoexample() }
+        item { ShowPhotoexample(title) }
         item { Spacer(modifier = Modifier.height(16.dp)) }
         item { ShowReviewList(reviewViewModel, title) }
         item { Spacer(modifier = Modifier.height(16.dp)) }
@@ -242,8 +248,11 @@ fun ShowPhotoBooth(
 
 
 @Composable
-fun ShowPhotoexample() {
-    Column (
+fun ShowPhotoexample(title: String) {
+    var selectedImageResId by remember { mutableStateOf<Int?>(null) }
+    val imageResources = getImageResources(title) // title에 해당하는 이미지 리소스를 가져옴
+
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
@@ -252,15 +261,16 @@ fun ShowPhotoexample() {
         LazyRow(
             modifier = Modifier.padding(top = 8.dp)
         ) {
-            items(5) { // replace with actual item count
+            items(imageResources) { imageResId ->
                 Card(
                     shape = CircleShape,
                     modifier = Modifier
                         .size(100.dp)
                         .padding(end = 8.dp)
+                        .clickable { selectedImageResId = imageResId }
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.img4), // replace with actual image resource
+                        painter = painterResource(id = imageResId),
                         contentDescription = null,
                         contentScale = ContentScale.Crop
                     )
@@ -268,6 +278,46 @@ fun ShowPhotoexample() {
             }
         }
     }
+
+    if (selectedImageResId != null) {
+        AlertDialog(
+            onDismissRequest = { selectedImageResId = null },
+            confirmButton = {
+                IconButton(onClick = { selectedImageResId = null }) {
+                    Icon(imageVector = Icons.Default.Close, contentDescription = "Close")
+                }
+            },
+            text = {
+                Image(
+                    painter = painterResource(id = selectedImageResId!!),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(400.dp) // 높이를 적절하게 조정하세요
+                )
+            }
+        )
+    }
+}
+
+@Composable
+fun getImageResources(title: String): List<Int> {
+    val context = LocalContext.current
+    val imageResources = mutableListOf<Int>()
+    var index = 0
+
+    while (true) {
+        val imageName = "pic_${title}$index"
+        val imageResId = context.resources.getIdentifier(imageName, "drawable", context.packageName)
+        if (imageResId != 0) {
+            imageResources.add(imageResId)
+            index++
+        } else {
+            break
+        }
+    }
+    return imageResources
 }
 
 @Composable
