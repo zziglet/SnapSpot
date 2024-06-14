@@ -1,75 +1,181 @@
 package com.naver.maps.map.compose.Life4cuts.screens
 
-import android.util.Log
+import android.net.Uri
+import android.provider.MediaStore
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.firestore
+import com.google.firebase.storage.FirebaseStorage
+import java.io.IOException
 
-//(시현님 파트인 것 같아요)
-// 로그인한 유저가 업로드한 리뷰의 사진을 그 user의 firebase에 모두 저장되어야 할 것 같아요!
-// firebase에 저장된 이미지를 photoinfo(date, place, img url, userid)으로 선언되어야 할 것 같아요
-// 저장하는 함수를 어떻게.. 어디서 구현하면 좋을까요..
-val db = Firebase.firestore
-data class PhotoInfo(val url: String, val description: String, val email: String)
-
-fun AddPhotoInfo(photoInfo: PhotoInfo) {
-    val user = FirebaseAuth.getInstance().currentUser
-    db.collection("photos").add(photoInfo)
-        .addOnSuccessListener { documentReference ->
-            Log.d("Firestore", "DocumentSnapshot written with email: ${documentReference.id}")
-        }
-        .addOnFailureListener { e ->
-            Log.w("Firestore", "Error adding document", e)
-        }
-}
-
-//(지원 파트) 로그인한 유저가 업로드한 리뷰 사진을 그리드 형식으로 출력, 아직 기능 테스트 해보지 못 했습니다
 @Composable
-fun PhotosGrid() {
-    val photos = remember { mutableStateListOf<PhotoInfo>() } // Photo는 사진 URL과 기타 정보를 포함하는 데이터 클래스
+fun UploadAlbum() {
+    val mAuth = FirebaseAuth.getInstance()
+    val mStorageRef = FirebaseStorage.getInstance().reference
+    val currentUser = mAuth.currentUser
 
-    // Firestore에서 사진 정보 읽어오기
-    LaunchedEffect(Unit) {
-        val db = Firebase.firestore
-        db.collection("photos")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    val photo = document.toObject(PhotoInfo::class.java)
-                    photos.add(photo)
-                }
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
+    var imageBitmap by remember { mutableStateOf<android.graphics.Bitmap?>(null) }
+    val context = LocalContext.current
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        imageUri = uri
+        imageUri?.let {
+            try {
+                imageBitmap = MediaStore.Images.Media.getBitmap(
+                    context.contentResolver,
+                    it
+                )
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
+        }
     }
 
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(3), // 한 줄에 3개의 사진을 표시
-        contentPadding = PaddingValues(8.dp),
-        content = {
-            items(photos.size) { index ->
-                Image(
-                    painter = rememberAsyncImagePainter(photos[index].url),
-                    contentDescription = null,
-                    modifier = Modifier.padding(4.dp)
-                )
-            }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        imageBitmap?.let {
+            Image(
+                bitmap = it.asImageBitmap(),
+                contentDescription = null,
+                modifier = Modifier
+                    .height(200.dp)
+                    .width(200.dp)
+            )
         }
-    )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(modifier = Modifier
+            .width(327.dp)
+            .height(40.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.LightGray,
+                contentColor = Color.Black,
+                disabledContainerColor = Color.DarkGray,
+                disabledContentColor = Color.White
+            ),
+            onClick = { launcher.launch("image/*") }) {
+            Text(text = "Choose Image")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            modifier = Modifier
+                .width(327.dp)
+                .height(40.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.LightGray,
+                contentColor = Color.Black,
+                disabledContainerColor = Color.DarkGray,
+                disabledContentColor = Color.White
+            )
+            ,onClick = {
+            if (imageUri != null && currentUser != null) {
+                val fileReference = mStorageRef.child("uploads/${currentUser.uid}/${System.currentTimeMillis()}.jpg")
+                val uploadTask = fileReference.putFile(imageUri!!)
+                uploadTask.addOnSuccessListener {
+                    Toast.makeText(context, "Upload successful", Toast.LENGTH_LONG).show()
+                }.addOnFailureListener { e ->
+                    Toast.makeText(context, "Upload failed: ${e.message}", Toast .LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(context, "No image selected or user not logged in", Toast.LENGTH_SHORT).show()
+            }
+        }) {
+            Text(text = "Upload Image")
+        }
+    }
 }
 
 @Composable
 fun AlbumScreen() {
-    //addPhotoInfo()
-    PhotosGrid()
+    var showUploadAlbum by remember { mutableStateOf(false) }
+    var isFabVisible by remember { mutableStateOf(true) }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+    ) {
+        if (showUploadAlbum) {
+            UploadAlbum()
+        }
+
+        if (isFabVisible) {
+            FloatingActionButton(
+                onClick = {
+                    showUploadAlbum = true
+                    isFabVisible = false
+                },
+                containerColor = Color.Black,
+                contentColor = Color.White,
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(16.dp)
+            ) {
+                Icon(Icons.Default.Add, contentDescription = "Add Image")
+            }
+        }
+    }
+}
+
+@Composable
+fun bookmarkPhotoScreen(){
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+    ){
+        Text("bookmarkphoto")
+    }
+
+}
+
+@Composable
+fun bookmarkPlaceScreen(){
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+    ){
+        Text("bookmarkplace")
+    }
 }

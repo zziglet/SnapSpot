@@ -74,6 +74,7 @@ dependencies {
     implementation libs.androidx.constraintlayout
     implementation libs.coil.compose
     implementation libs.androidx.ui.tooling.preview.android
+    implementation libs.firebase.storage.ktx
     androidTestImplementation libs.androidx.test.ext.junit
     androidTestImplementation libs.androidx.test.espresso.core
 }

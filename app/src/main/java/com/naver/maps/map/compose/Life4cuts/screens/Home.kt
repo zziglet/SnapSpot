@@ -31,7 +31,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -109,7 +108,7 @@ fun HomeScreen(navController: NavController) {
             ) {
                 Image(
                     painter = painterResource(
-                        id = selectedMarkerInfo?.imgId ?: R.drawable.ic_info_black_24dp
+                        id = selectedMarkerInfo?.img ?: R.drawable.ic_info_black_24dp
                     ),
                     contentDescription = "img",
                     contentScale = ContentScale.Crop,

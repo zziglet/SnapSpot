@@ -3,28 +3,20 @@ package com.naver.maps.map.compose.Life4cuts.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.interaction.InteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Divider
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TextFieldDefaults.indicatorLine
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,7 +26,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -194,7 +185,7 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth , firestore: Fi
             shape = RoundedCornerShape(12.dp)
         ) {
             Text(
-                text = "Sign up",
+                text = "Sign in",
                 style = TextStyle(
                     fontSize = 14.sp,
                     lineHeight = 19.6.sp,
@@ -226,7 +217,7 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth , firestore: Fi
                 .height(1.dp)
                 .background(color = Color(0xFFE6E6E6)))
             Text(
-                text = "or the account already",
+                text = "or the account not",
                 style = TextStyle(
                     fontSize = 14.sp,
                     lineHeight = 19.6.sp,
@@ -256,7 +247,7 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth , firestore: Fi
             shape = RoundedCornerShape(12.dp)
         ) {
             Text(
-                text = "Sign in",
+                text = "Sign up",
                 style = TextStyle(
                     fontSize = 14.sp,
                     lineHeight = 19.6.sp,
@@ -403,8 +394,8 @@ fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
         BasicTextField(
             modifier = Modifier
                 .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(7.dp))
-                .width(300.dp)
-                .height(27.dp)
+                .width(327.dp)
+                .height(40.dp)
                 .background(Color.White),
             value = email,
             onValueChange = { email = it },
@@ -414,13 +405,13 @@ fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = if (email.isEmpty()) "email@domain.com" else "",
+                        text = if (password.isEmpty()) "email@domain.com" else "",
                         style = TextStyle(
-                            fontSize = 12.sp,
+                            fontSize = 14.sp,
                             lineHeight = 19.6.sp,
+                            fontFamily = FontFamily(Font(R.font.inter)),
                             fontWeight = FontWeight(400),
-                            color = Color(0xFF828282),
-                            textAlign = TextAlign.Center
+                            color = Color(0xFF828282)
                         )
                     )
                     Spacer(modifier = Modifier.width(width = 8.dp))
@@ -439,8 +430,8 @@ fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
         BasicTextField(
             modifier = Modifier
                 .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(7.dp))
-                .width(300.dp)
-                .height(27.dp)
+                .width(327.dp)
+                .height(40.dp)
                 .background(Color.White),
             value = password,
             onValueChange = { password = it },
@@ -453,11 +444,11 @@ fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
                     Text(
                         text = if (password.isEmpty()) "password" else "",
                         style = TextStyle(
-                            fontSize = 12.sp,
+                            fontSize = 14.sp,
                             lineHeight = 19.6.sp,
+                            fontFamily = FontFamily(Font(R.font.inter)),
                             fontWeight = FontWeight(400),
-                            color = Color(0xFF828282),
-                            textAlign = TextAlign.Center
+                            color = Color(0xFF828282)
                         )
                     )
                     Spacer(modifier = Modifier.width(width = 8.dp))
@@ -472,9 +463,11 @@ fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
                 style = TextStyle(fontSize = 12.sp)
             )
         }
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(40.dp))
         Button(
-            modifier = Modifier.width(300.dp),
+            modifier = Modifier
+                .width(327.dp)
+                .height(40.dp),
             onClick = {
                 validateInput()
                 if (emailError == null && passwordError == null)
@@ -488,7 +481,7 @@ fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
             ),
             shape = RoundedCornerShape(12.dp)
         ) {
-            Text("Sign in")
+            Text("Sign up")
         }
     }
 }

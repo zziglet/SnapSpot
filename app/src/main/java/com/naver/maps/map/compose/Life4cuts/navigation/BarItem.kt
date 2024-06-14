@@ -58,8 +58,8 @@ object NavBarItems{
             route = "Place"
         ),
         topBarItem(
-            title = "Bookmark",
-            route = "Bookmark"
+            title = "Photo",
+            route = "Photo"
         )
 
     )
