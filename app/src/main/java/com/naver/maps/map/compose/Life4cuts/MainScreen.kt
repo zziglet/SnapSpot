@@ -22,7 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.naver.maps.map.compose.Life4cuts.navigation.BottomNavigationBar
-import com.naver.maps.map.compose.Life4cuts.navigation.NagivationHost
+import com.naver.maps.map.compose.Life4cuts.navigation.NavigationHost
 import com.naver.maps.map.compose.Life4cuts.navigation.NavRoutes
 import com.naver.maps.map.compose.Life4cuts.navigation.TopNavigationBar
 import com.naver.maps.map.compose.Life4cuts.screens.LoginScreen
@@ -44,7 +44,8 @@ fun MainScreen(auth: FirebaseAuth,firestore:FirebaseFirestore) {
         Column(modifier = Modifier
             .padding(contentPadding)
             .background(color = Color.White)) {
-            NagivationHost(navController = navController,auth , firestore)
+            //NavigationHost 오타 수정
+            NavigationHost(navController = navController,auth , firestore)
         }
     }
 }
