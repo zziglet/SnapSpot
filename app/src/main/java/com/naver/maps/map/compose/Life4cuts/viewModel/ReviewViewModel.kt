@@ -1,3 +1,5 @@
+package com.naver.maps.map.compose.Life4cuts.viewModel
+
 import android.annotation.SuppressLint
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel

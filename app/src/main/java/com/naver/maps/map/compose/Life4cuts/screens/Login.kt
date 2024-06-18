@@ -42,7 +42,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.naver.maps.map.compose.Life4cuts.navigation.NavRoutes
 import com.naver.maps.map.compose.demo.R
 
-
 @Composable
 fun LoginScreen(navController: NavController, auth: FirebaseAuth , firestore: FirebaseFirestore) {
     var email by remember { mutableStateOf("") }
@@ -192,7 +191,6 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth , firestore: Fi
                     fontFamily = FontFamily(Font(R.font.inter)),
                     fontWeight = FontWeight(500),
                     color = Color(0xFFFFFFFF),
-
                     )
             )
         }
@@ -289,7 +287,6 @@ private fun loginUser(
             }
         }
 }
-
 private fun saveUserData(uid: String, data: String , firestore: FirebaseFirestore) {
     val userCollection = firestore.collection("users").document(uid).collection("userData")
     val dataMap = hashMapOf("dataField" to data)

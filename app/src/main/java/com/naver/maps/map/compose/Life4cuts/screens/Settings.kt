@@ -26,7 +26,7 @@ import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.naver.maps.map.compose.Life4cuts.navigation.NavRoutes
-import com.naver.maps.map.compose.Life4cuts.screens.FavoriteViewModel
+import com.naver.maps.map.compose.Life4cuts.viewModel.FavoriteViewModel
 import com.naver.maps.map.compose.demo.R
 import kotlinx.coroutines.tasks.await
 

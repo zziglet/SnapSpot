@@ -77,4 +77,5 @@ dependencies {
     implementation libs.firebase.storage.ktx
     androidTestImplementation libs.androidx.test.ext.junit
     androidTestImplementation libs.androidx.test.espresso.core
+    implementation 'com.google.android.recaptcha:recaptcha:18.5.0-beta03'
 }

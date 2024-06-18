@@ -4,7 +4,7 @@ import AccountSettingsScreen
 import FavoritesScreen
 import ProfileScreen
 import PublicSettingScreen
-import ReviewViewModel
+import com.naver.maps.map.compose.Life4cuts.viewModel.ReviewViewModel
 import SettingsScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.naver.maps.map.compose.Life4cuts.screens.AlbumScreen
 import com.naver.maps.map.compose.Life4cuts.screens.BookmarkScreen
-import com.naver.maps.map.compose.Life4cuts.screens.FavoriteViewModel
+import com.naver.maps.map.compose.Life4cuts.viewModel.FavoriteViewModel
 import com.naver.maps.map.compose.Life4cuts.screens.HomeScreen
 import com.naver.maps.map.compose.Life4cuts.screens.LoginScreen
 import com.naver.maps.map.compose.Life4cuts.screens.PhotoScreen

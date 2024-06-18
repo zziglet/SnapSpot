@@ -1,4 +1,4 @@
-package com.naver.maps.map.compose.Life4cuts.screens
+package com.naver.maps.map.compose.Life4cuts.viewModel
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
