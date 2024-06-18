@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -41,17 +43,23 @@ fun PlaceScreen(navController: NavController, favoriteViewModel: FavoriteViewMod
             .padding(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        items(items = favorites) { favorite ->
-            ShowPhotoBooth(
-                userId = userId ?: "",
-                caption = favorite.caption,
-                address = favorite.address,
-                imgId = favorite.imgId,
-                title = favorite.title,
-                hashtag = favorite.hashtag,
-                firestore = firestore
-            )
-            Spacer(modifier = Modifier.height(16.dp))
+        if(favorites.isEmpty()){
+            item {
+                Text(text = "즐겨찾기한 포토부스가 없습니다.")
+            }
+        }else{
+            items(items = favorites) { favorite ->
+                ShowPhotoBooth(
+                    userId = userId ?: "",
+                    caption = favorite.caption,
+                    address = favorite.address,
+                    imgId = favorite.imgId,
+                    title = favorite.title,
+                    hashtag = favorite.hashtag,
+                    firestore = firestore
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
         }
     }
 }

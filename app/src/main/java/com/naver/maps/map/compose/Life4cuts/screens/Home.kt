@@ -101,7 +101,7 @@ fun HomeScreen(navController: NavController) {
             )
             Row(
                 modifier = Modifier
-                    .width(230.dp)
+                    .width(332.dp)
                     .height(130.dp),
                 horizontalArrangement = Arrangement.spacedBy(15.dp, Alignment.Start),
                 verticalAlignment = Alignment.CenterVertically

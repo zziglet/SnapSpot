@@ -29,38 +29,39 @@ fun BottomNavigationBar(navController: NavController) {
     ) {
         val backStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = backStackEntry?.destination?.route
-
-        NavBarItems.BarItems.forEach { navItem ->
-            NavigationBarItem(
-                modifier = Modifier.background(color = Color.White),
-                selected = currentRoute == navItem.route,
-                onClick = {
-                    navController.navigate(navItem.route)
-                    {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                        }
-                    }
-                },
-                icon = {
-                    Icon(
-                        imageVector = if (currentRoute == navItem.route)
-                            navItem.onSelectedIcon else navItem.selectIcon,
-                        contentDescription = navItem.title
+        if(!(currentRoute.equals("Login") || currentRoute.equals("Register"))){
+                NavBarItems.BarItems.forEach { navItem ->
+                    NavigationBarItem(
+                        modifier = Modifier.background(color = Color.White),
+                        selected = currentRoute == navItem.route,
+                        onClick = {
+                            navController.navigate(navItem.route)
+                            {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                }
+                            }
+                        },
+                        icon = {
+                            Icon(
+                                imageVector = if (currentRoute == navItem.route)
+                                    navItem.onSelectedIcon else navItem.selectIcon,
+                                contentDescription = navItem.title
+                            )
+                        },
+                        label = {
+                            Text(text = navItem.title)
+                        },
+                        colors = NavigationBarItemColors(
+                            selectedIconColor = Color.Black,
+                            unselectedIconColor = Color.LightGray,
+                            disabledIconColor = Color.LightGray,
+                            selectedIndicatorColor = Color.White,
+                            disabledTextColor = Color.LightGray,
+                            unselectedTextColor = Color.LightGray,
+                            selectedTextColor = Color.Black
+                        )
                     )
-                },
-                label = {
-                    Text(text = navItem.title)
-                },
-                colors = NavigationBarItemColors(
-                    selectedIconColor = Color.Black,
-                    unselectedIconColor = Color.LightGray,
-                    disabledIconColor = Color.LightGray,
-                    selectedIndicatorColor = Color.White,
-                    disabledTextColor = Color.LightGray,
-                    unselectedTextColor = Color.LightGray,
-                    selectedTextColor = Color.Black
-                )
-            )
+                }
         }
     }
 }

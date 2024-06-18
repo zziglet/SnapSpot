@@ -70,7 +70,7 @@ fun NavigationHost(navController: NavHostController, auth: FirebaseAuth, firesto
 
         }
         composable(NavRoutes.Album.route){
-            AlbumScreen()
+            AlbumScreen(navController)
         }
         composable(NavRoutes.Place.route){
             val viewModel: FavoriteViewModel = viewModel()
@@ -87,7 +87,7 @@ fun NavigationHost(navController: NavHostController, auth: FirebaseAuth, firesto
 
         }
         composable(NavRoutes.MyAlbum.route){
-            AlbumScreen()
+            AlbumScreen(navController)
         }
         composable(
             route = NavRoutes.Review.route,

@@ -48,7 +48,10 @@ fun BookmarkScreen(auth: FirebaseAuth, firestore: FirebaseFirestore, bookmarkedI
         imageList.value = bitmaps
     }
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .padding(10.dp),
+        contentAlignment = Alignment.TopCenter) {
         if (imageList.value.isNotEmpty()) {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(3),
@@ -72,7 +75,7 @@ fun BookmarkScreen(auth: FirebaseAuth, firestore: FirebaseFirestore, bookmarkedI
                 }
             }
         } else {
-            Text(text = "북마크된 사진이 없습니다.")
+            Text(text = "북마크한 포즈가 없습니다.")
         }
     }
 
