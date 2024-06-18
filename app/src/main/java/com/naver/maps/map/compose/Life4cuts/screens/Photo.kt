@@ -3,6 +3,7 @@ package com.naver.maps.map.compose.Life4cuts.screens
 import android.content.Context
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,7 +13,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.AlertDialog
@@ -28,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
@@ -129,40 +133,40 @@ fun PhotoScreen(auth: FirebaseAuth, firestore: FirebaseFirestore, bookmarkedImag
             val imageId = selectedImageId.value ?: return@let
             val isBookmarked = bookmarkedImages.contains(imageId)
             AlertDialog(
+                containerColor = Color.White,
                 onDismissRequest = { showDialog.value = false },
                 text = {
-                    Box(modifier = Modifier.size(300.dp)) {
-                        Image(
-                            bitmap = image,
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Crop
-                        )
-                        Icon(
-                            imageVector = if (isBookmarked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .align(Alignment.TopEnd)
-                                .size(24.dp)
-                                .clickable {
-                                    val newBookmarks = bookmarkedImages.toMutableSet()
-                                    if (isBookmarked) {
-                                        newBookmarks.remove(imageId)
-                                        firestore.collection("users").document(currentUser!!.uid)
-                                            .collection("bookmarks").document(imageId).delete()
-                                    } else {
-                                        newBookmarks.add(imageId)
-                                        firestore.collection("users").document(currentUser!!.uid)
-                                            .collection("bookmarks").document(imageId).set(mapOf("id" to imageId))
-                                    }
-                                    onUpdateBookmarks(newBookmarks)
+                    Image(
+                        bitmap = image,
+                        contentDescription = null,
+                        modifier = Modifier.size(500.dp)
+                    )
+                    Icon(
+                        imageVector = if (isBookmarked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                        tint = Color.Red,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(24.dp)
+                            .clickable {
+                                val newBookmarks = bookmarkedImages.toMutableSet()
+                                if (isBookmarked) {
+                                    newBookmarks.remove(imageId)
+                                    firestore.collection("users").document(currentUser!!.uid)
+                                        .collection("bookmarks").document(imageId).delete()
+                                } else {
+                                    newBookmarks.add(imageId)
+                                    firestore.collection("users").document(currentUser!!.uid)
+                                        .collection("bookmarks").document(imageId).set(mapOf("id" to imageId))
                                 }
-                        )
-                    }
+                                onUpdateBookmarks(newBookmarks)
+                            }
+                    )
                 },
                 confirmButton = {
-                    Button(onClick = { showDialog.value = false }) {
-                        Text("닫기")
+                    IconButton(onClick = { showDialog.value = false  }) {
+                        Icon(imageVector = Icons.Default.Close,
+                            tint = Color.Black,
+                            contentDescription = "Close")
                     }
                 }
             )
