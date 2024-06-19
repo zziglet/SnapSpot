@@ -10,6 +10,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,8 +27,13 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FloatingActionButton
@@ -42,6 +48,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -149,8 +156,10 @@ fun UploadAlbum(navController: NavController) {
 fun AlbumScreen(navController: NavController) {
     var showUploadAlbum by remember { mutableStateOf(false) }
     var isFabVisible by remember { mutableStateOf(true) }
+    val showDialog = remember { mutableStateOf(false) }
     val user = FirebaseAuth.getInstance().currentUser
     var imageUris by remember { mutableStateOf(listOf<Uri>()) }
+    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
 
     LaunchedEffect(user) {
         if (user != null) {
@@ -195,7 +204,10 @@ fun AlbumScreen(navController: NavController) {
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
                                 .size(100.dp)
-
+                                .clickable {
+                                    showDialog.value = true
+                                    selectedImageUri = url
+                                }
                         )
                     }
                 }
@@ -217,6 +229,27 @@ fun AlbumScreen(navController: NavController) {
                 Icon(Icons.Default.Add, contentDescription = "Add Image")
             }
         }
+    }
+    if (showDialog.value) {
+        AlertDialog(
+            containerColor = Color.White,
+            onDismissRequest = { showDialog.value = false },
+            text = {
+                Image(
+                    painter = rememberAsyncImagePainter(model = selectedImageUri),
+                    contentDescription = "",
+                    modifier = Modifier.size(500.dp)
+                )
+            },
+            confirmButton = {
+                IconButton(onClick = { showDialog.value = false  }) {
+                    Icon(imageVector = Icons.Default.Close,
+                        tint = Color.Black,
+                        contentDescription = "Close")
+                }
+            }
+        )
+
     }
 }
 

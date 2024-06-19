@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Divider
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -32,6 +33,8 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -252,7 +255,6 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth , firestore: Fi
                     fontFamily = FontFamily(Font(R.font.inter)),
                     fontWeight = FontWeight(500),
                     color = Color(0xFF000000),
-
                     )
             )
         }
@@ -332,13 +334,12 @@ fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Text(
             text = "나만의 포토부스 관리 서비스",
             style = TextStyle(
                 fontSize = 12.sp,
                 lineHeight = 18.sp,
-                //fontFamily = FontFamily(Font(R.font.inter)),
+                fontFamily = FontFamily(Font(R.font.inter)),
                 fontWeight = FontWeight(400),
                 color = Color(0xFF828282),
                 textAlign = TextAlign.Center
@@ -349,30 +350,30 @@ fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
             style = TextStyle(
                 fontSize = 48.sp,
                 lineHeight = 72.sp,
-                //fontFamily = FontFamily(Font(R.font.judson)),
+                fontFamily = FontFamily(Font(R.font.judson)),
                 fontWeight = FontWeight(400),
                 fontStyle = FontStyle.Italic,
                 color = Color(0xFF000000),
                 textAlign = TextAlign.Center
             )
         )
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(50.dp))
         Image(
             modifier = Modifier.height(90.dp),
             painter = painterResource(id = R.drawable.loginimg),
             contentDescription = "image description",
             contentScale = ContentScale.Crop
         )
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(50.dp))
         Text(
             text = "Create an account",
             style = TextStyle(
                 fontSize = 18.sp,
                 lineHeight = 27.sp,
-                //fontFamily = FontFamily(Font(R.font.inter)),
+                fontFamily = FontFamily(Font(R.font.inter)),
                 fontWeight = FontWeight(600),
                 color = Color(0xFF000000),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
         )
         Text(
@@ -380,13 +381,12 @@ fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
             style = TextStyle(
                 fontSize = 14.sp,
                 lineHeight = 21.sp,
-                //fontFamily = FontFamily(Font(R.font.inter)),
+                fontFamily = FontFamily(Font(R.font.inter)),
                 fontWeight = FontWeight(400),
                 color = Color(0xFF000000),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
         )
-
         Spacer(modifier = Modifier.height(40.dp))
         BasicTextField(
             modifier = Modifier
@@ -478,7 +478,17 @@ fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
             ),
             shape = RoundedCornerShape(12.dp)
         ) {
-            Text("Sign up")
+            Text("Sign up",
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    lineHeight = 19.6.sp,
+                    fontFamily = FontFamily(Font(R.font.inter)),
+                    fontWeight = FontWeight(500),
+                    color = Color(0xFF000000),
+                ))
+        }
+        Button(onClick = { /*TODO*/ }) {
+            
         }
     }
 }

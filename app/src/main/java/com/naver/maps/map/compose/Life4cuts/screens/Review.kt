@@ -23,6 +23,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
@@ -59,6 +60,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -129,7 +132,6 @@ fun ShowPhotoBooth(
                 isFavorite = document.exists()
             }
     }
-
     Column(
         modifier = Modifier
             .shadow(12.dp, RectangleShape)
@@ -204,8 +206,8 @@ fun ShowPhotoBooth(
         )
         Row(
             modifier = Modifier
-                .width(230.dp)
-                .height(100.dp),
+                .width(332.dp)
+                .height(130.dp),
             horizontalArrangement = Arrangement.spacedBy(15.dp, Alignment.Start),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -335,6 +337,7 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
     var showReviewinput by remember { mutableStateOf(false) }
     var reviewText by remember { mutableStateOf(TextFieldValue("")) }
     var rating by remember { mutableStateOf(0) }
+    var confirmbtnText by remember { mutableStateOf("Close") }
 
     LaunchedEffect(title) {
         reviewViewModel.loadReviews(title)
@@ -351,7 +354,7 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
                     fontFamily = FontFamily(Font(R.font.inter)),
                     fontWeight = FontWeight(600),
                     color = Color(0xFF000000)))
-            Spacer(modifier = Modifier.width(270.dp))
+            Spacer(modifier = Modifier.width(290.dp))
             FloatingActionButton(
                 onClick = {
                     showReviewinput = true
@@ -365,6 +368,7 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
                 Icon(Icons.Default.Add, contentDescription = "Add Image")
             }
         }
+        Spacer(modifier = Modifier.padding(5.dp))
         LazyColumn(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -413,7 +417,7 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
     }
     if(showReviewinput){
         AlertDialog(
-            onDismissRequest = { reviewText = TextFieldValue("") },
+            onDismissRequest = { reviewText = TextFieldValue(""); confirmbtnText = "Close" },
             confirmButton = {
                 Button(
                     colors = ButtonDefaults.buttonColors(
@@ -428,12 +432,14 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
                             reviewViewModel.addReview(title, "⭐ $rating ${reviewText.text}")
                             reviewText = TextFieldValue("") // Clear the text field
                             rating = 0 // Reset rating
-                        }else if(reviewText.text.isEmpty())
+                        }else if(reviewText.text.isEmpty()){
                             showReviewinput = false
+                            confirmbtnText = "Close"
+                        }
                         showReviewinput = false
                     }
                 ) {
-                    Text("Submit",
+                    Text(confirmbtnText,
                         style = TextStyle(
                             fontSize = 13.sp,
                             fontFamily = FontFamily(Font(R.font.inter)),
@@ -478,7 +484,16 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
                             )
                             .background(Color.White),
                         value = reviewText,
-                        onValueChange = { reviewText = it },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Text,  // 기본 텍스트 입력 타입 설정
+                            imeAction = ImeAction.Done         // IME 액션 설정 (예: 완료)
+                        ),
+                        onValueChange = { reviewText = it ;
+                                        if(reviewText.equals("")){
+                                            confirmbtnText = "Close"
+                                        }else{
+                                            confirmbtnText = "Submit"
+                                        }},
                         decorationBox = { innerTextField ->
                             Row(
                                 modifier = Modifier.padding(start = 5.dp)) {
