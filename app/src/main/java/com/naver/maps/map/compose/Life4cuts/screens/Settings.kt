@@ -84,7 +84,7 @@ fun SettingsScreen(navController: NavController) {
             item {
                 SettingsItem(
                     icon = painterResource(id = R.drawable.baseline_star_24),
-                    text = " 북마크한 사진 초기화",
+                    text = "북마크한 사진 초기화",
                     onClick = { navController.navigate("favorites") }
                 )
             }

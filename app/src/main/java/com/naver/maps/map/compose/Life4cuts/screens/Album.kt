@@ -97,9 +97,6 @@ fun UploadAlbum(navController: NavController) {
             Image(
                 bitmap = it.asImageBitmap(),
                 contentDescription = null,
-                modifier = Modifier
-                    .height(200.dp)
-                    .width(200.dp)
             )
         }
 
@@ -192,7 +189,7 @@ fun AlbumScreen(navController: NavController) {
                 }
             }else{
                 LazyVerticalGrid(
-                    columns = GridCells.Fixed(3),
+                    columns = GridCells.Adaptive(100.dp),
                     contentPadding = PaddingValues(4.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
@@ -201,13 +198,14 @@ fun AlbumScreen(navController: NavController) {
                         Image(
                             painter = rememberAsyncImagePainter(model = url),
                             contentDescription = "",
-                            contentScale = ContentScale.Crop,
                             modifier = Modifier
-                                .size(100.dp)
+                                .width(156.dp)
+                                .height(203.dp)
                                 .clickable {
                                     showDialog.value = true
                                     selectedImageUri = url
-                                }
+                                },
+                            contentScale = ContentScale.Crop
                         )
                     }
                 }

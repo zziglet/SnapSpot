@@ -276,7 +276,7 @@ fun ShowPhotoexample(title: String) {
                 Card(
                     shape = CircleShape,
                     modifier = Modifier
-                        .size(100.dp)
+                        .size(134.dp)
                         .padding(end = 8.dp)
                         .clickable { selectedImageResId = imageResId }
                 ) {

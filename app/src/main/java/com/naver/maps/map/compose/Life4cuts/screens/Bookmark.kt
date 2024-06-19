@@ -66,7 +66,8 @@ fun BookmarkScreen(auth: FirebaseAuth, firestore: FirebaseFirestore, bookmarkedI
                         bitmap = image,
                         contentDescription = null,
                         modifier = Modifier
-                            .size(100.dp)
+                            .width(156.dp)
+                            .height(203.dp)
                             .clickable {
                                 selectedImage.value = image
                                 selectedImageId.value = imageId
