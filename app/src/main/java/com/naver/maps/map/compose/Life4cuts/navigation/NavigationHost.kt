@@ -4,7 +4,7 @@ import AccountSettingsScreen
 import FavoritesScreen
 import ProfileScreen
 import PublicSettingScreen
-import com.naver.maps.map.compose.Life4cuts.viewModel.ReviewViewModel
+import ReviewViewModel
 import SettingsScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

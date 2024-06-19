@@ -1,5 +1,3 @@
-package com.naver.maps.map.compose.Life4cuts.viewModel
-
 import android.annotation.SuppressLint
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
@@ -8,7 +6,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.io.File
 
 class ReviewViewModel : ViewModel() {
-    var reviews = mutableStateListOf<String>()
+
+    var reviews = mutableStateListOf<Pair<String, String>>() // Pair로 별점과 리뷰를 저장
         private set
 
     var userId: String? = null
@@ -29,7 +28,12 @@ class ReviewViewModel : ViewModel() {
         val file = getReviewFile(caption)
         if (file.exists()) {
             reviews.clear()
-            reviews.addAll(file.readLines())
+            val lines = file.readLines()
+            for (i in lines.indices step 2) {
+                if (i + 1 < lines.size) {
+                    reviews.add(Pair(lines[i], lines[i + 1]))
+                }
+            }
         } else {
             reviews.clear()
         }
@@ -38,8 +42,9 @@ class ReviewViewModel : ViewModel() {
     @SuppressLint("SdCardPath")
     fun addReview(title: String, review: String) {
         val file = getReviewFile(title)
-        file.appendText("$review\n")
-        reviews.add(review)
+        val (rating, reviewText) = review.split("\n", limit = 2)
+        file.appendText("$rating\n$reviewText\n")
+        reviews.add(Pair(rating, reviewText))
     }
 
     // 즐겨찾기 추가

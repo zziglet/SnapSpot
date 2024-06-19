@@ -1,6 +1,6 @@
 package com.naver.maps.map.compose.Life4cuts.screens
 
-import com.naver.maps.map.compose.Life4cuts.viewModel.ReviewViewModel
+import ReviewViewModel
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -149,7 +149,7 @@ fun ShowPhotoBooth(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "SnapSpot",
+                text = title,
                 style = TextStyle(
                     fontSize = 20.sp,
                     lineHeight = 30.sp,
@@ -407,8 +407,8 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
                                 .width(332.dp)
                                 .height(60.dp)
                         ) {
-                            //review 파싱 어케하나용..
-                            Text(text = review)
+                            Text(text = review.first)  // 별점
+                            Text(text = review.second) // 리뷰 텍스트
                         }
                     }
                 }
@@ -429,7 +429,7 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
                     shape = RoundedCornerShape(12.dp),
                     onClick = {
                         if (reviewText.text.isNotEmpty() && rating > 0) {
-                            reviewViewModel.addReview(title, "⭐ $rating ${reviewText.text}")
+                            reviewViewModel.addReview(title, "⭐ $rating\n ${reviewText.text}")
                             reviewText = TextFieldValue("") // Clear the text field
                             rating = 0 // Reset rating
                         }else if(reviewText.text.isEmpty()){
