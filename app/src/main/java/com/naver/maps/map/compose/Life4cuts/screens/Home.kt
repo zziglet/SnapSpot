@@ -70,11 +70,13 @@ fun HomeScreen(navController: NavController) {
                 .background(color = Color.White, shape = RoundedCornerShape(size = 12.dp))
                 .padding(start = 19.dp, top = 16.dp, end = 16.dp)
                 .clickable {
-                    navController.navigate(
-                        "review/${selectedMarkerInfo?.caption}/${selectedMarkerInfo?.address}" +
-                            "/${selectedMarkerInfo?.imgId}/${selectedMarkerInfo?.title}" +
-                            "/${selectedMarkerInfo?.hashtag}"
-                    )
+
+                    if(selectedMarkerInfo != null)
+                        navController.navigate(
+                            "review/${selectedMarkerInfo?.caption}/${selectedMarkerInfo?.address}" +
+                                "/${selectedMarkerInfo?.imgId}/${selectedMarkerInfo?.title}" +
+                                "/${selectedMarkerInfo?.hashtag}"
+                        )
                 },
             verticalArrangement = Arrangement.spacedBy(5.dp, Alignment.Top),
             horizontalAlignment = Alignment.Start,
