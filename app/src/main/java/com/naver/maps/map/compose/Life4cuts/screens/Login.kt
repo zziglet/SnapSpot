@@ -487,9 +487,6 @@ fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
                     color = Color(0xFF000000),
                 ))
         }
-        Button(onClick = { /*TODO*/ }) {
-            
-        }
     }
 }
 
