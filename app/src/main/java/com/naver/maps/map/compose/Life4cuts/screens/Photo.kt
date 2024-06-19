@@ -8,9 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.IconButton
@@ -23,10 +21,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,7 +40,7 @@ import kotlinx.coroutines.tasks.await
 /////
 
 //기존 LoadPhotosFromLocal함수는 Composable 함수라 같은 기능하는 함수 추가
-fun loadAllPhotosFromLocal(context: Context): List<Int> {
+fun LoadAllPhotosFromLocal(context: Context): List<Int> {
     val drawableClass = R.drawable::class.java
     val fieldList = drawableClass.fields
     val resourceIdList = mutableListOf<Int>()
@@ -68,7 +64,7 @@ fun loadAllPhotosFromLocal(context: Context): List<Int> {
 @Composable
 fun PhotoScreen(auth: FirebaseAuth, firestore: FirebaseFirestore, bookmarkedImages: Set<String>, onUpdateBookmarks: (Set<String>) -> Unit) {
     val context = LocalContext.current
-    val resourceIds = loadAllPhotosFromLocal(context)
+    val resourceIds = LoadAllPhotosFromLocal(context)
     val imageList = remember { mutableStateOf<List<ImageBitmap>>(emptyList()) }
     val showDialog = remember { mutableStateOf(false) }
     val selectedImage = remember { mutableStateOf<ImageBitmap?>(null) }
@@ -168,42 +164,5 @@ fun PhotoScreen(auth: FirebaseAuth, firestore: FirebaseFirestore, bookmarkedImag
                 }
             )
         }
-    }
-}
-
-
-/////////
-
-
-
-
-
-
-// 임시로 login한 User의 Data 불러오기 코드 추가했습니다.
-@Composable
-fun UserDataScreen(uid: String, firestore: FirebaseFirestore) {
-    var userData by remember { mutableStateOf<List<String>?>(null) }
-
-    LaunchedEffect(uid) {
-        userData = getUserData(firestore, uid)
-    }
-
-    if (userData != null) {
-        for (data in userData!!) {
-            Text(text = data)
-        }
-    } else {
-        Text(text = "Loading...")
-    }
-}
-
-private suspend fun getUserData(firestore: FirebaseFirestore, uid: String): List<String>? {
-    return try {
-        val userCollection = firestore.collection("users").document(uid).collection("userData")
-        val documents = userCollection.get().await()
-        documents.mapNotNull { it.getString("dataField") }
-    } catch (e: Exception) {
-        e.printStackTrace()
-        null
     }
 }

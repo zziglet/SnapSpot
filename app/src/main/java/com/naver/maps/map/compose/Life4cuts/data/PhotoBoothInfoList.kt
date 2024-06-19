@@ -2,7 +2,6 @@ package com.naver.maps.map.compose.Life4cuts.data
 
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.compose.demo.R
-import com.naver.maps.map.compose.Life4cuts.data.PhotoBoothInfo
 
 val markers = listOf(
     PhotoBoothInfo(

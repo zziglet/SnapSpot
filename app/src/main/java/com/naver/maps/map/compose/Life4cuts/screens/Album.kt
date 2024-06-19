@@ -68,10 +68,10 @@ import com.naver.maps.map.compose.demo.R
 import kotlinx.coroutines.tasks.await
 import java.io.IOException
 import java.text.SimpleDateFormat
-import java.util.*
 import java.util.Date
 import java.util.Locale
 
+//Album 화면 : 사용자가 사진을 등록하는 함수
 @Composable
 fun UploadAlbum(navController: NavController) {
     val mAuth = FirebaseAuth.getInstance()
@@ -212,6 +212,7 @@ fun UploadAlbum(navController: NavController) {
     }
 }
 
+//Album 화면 : 사용자가 등록한 앨범 출력 함수
 @Composable
 fun AlbumScreen(navController: NavController) {
     var showUploadAlbum by remember { mutableStateOf(false) }

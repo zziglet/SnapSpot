@@ -33,7 +33,6 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
-import androidx.compose.material3.AlertDialogDefaults.containerColor
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -348,7 +347,7 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
     }
     Column(
         modifier = Modifier
-            .height(250.dp) // LazyColumn의 높이 설정
+            .height(310.dp) // LazyColumn의 높이 설정
     ) {
         Row() {
             Text(text = "Review",
@@ -362,6 +361,7 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
             FloatingActionButton(
                 onClick = {
                     showReviewinput = true
+                    reviewText = TextFieldValue("")
                 },
                 containerColor = Color.White,
                 contentColor = Color.Black,
@@ -431,7 +431,9 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
     }
     if(showReviewinput){
         AlertDialog(
-            onDismissRequest = { reviewText = TextFieldValue(""); confirmbtnText = "Close" },
+            onDismissRequest = { reviewText = TextFieldValue("")
+                rating = 0
+                confirmbtnText = "Close"},
             confirmButton = {
                 Button(
                     colors = ButtonDefaults.buttonColors(
@@ -446,8 +448,9 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
                             reviewViewModel.addReview(title, "⭐ $rating\n ${reviewText.text}")
                             reviewText = TextFieldValue("") // Clear the text field
                             rating = 0 // Reset rating
-                        }else if(reviewText.text.isEmpty()){
                             showReviewinput = false
+                            confirmbtnText = "Close"
+                        }else if(reviewText.text.isEmpty()){
                             confirmbtnText = "Close"
                         }
                         showReviewinput = false
