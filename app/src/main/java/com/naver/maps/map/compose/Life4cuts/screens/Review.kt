@@ -67,7 +67,6 @@ import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.storage.FirebaseStorage
 import com.naver.maps.map.compose.Life4cuts.navigation.NavRoutes
 import com.naver.maps.map.compose.demo.R
 import kotlinx.coroutines.tasks.await
