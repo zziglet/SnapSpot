@@ -1,7 +1,6 @@
 package com.naver.maps.map.compose.Life4cuts.navigation
 
 
-import ReviewViewModel
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -104,9 +103,7 @@ fun NavigationHost(navController: NavHostController, auth: FirebaseAuth, firesto
             val img = backStackEntry.arguments?.getInt("img") ?: 0
             val title = backStackEntry.arguments?.getString("title") ?: ""
             val hashtag = backStackEntry.arguments?.getString("hashtag") ?: ""
-            val
-                viewModel: ReviewViewModel = viewModel()
-            ReviewScreen(caption, address, img, title, hashtag, viewModel, navController, firestore)
+            ReviewScreen(caption, address, img, title, hashtag, navController, firestore)
         }
 
 

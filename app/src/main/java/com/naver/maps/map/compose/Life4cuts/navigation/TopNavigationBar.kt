@@ -1,6 +1,5 @@
 package com.naver.maps.map.compose.Life4cuts.navigation
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding

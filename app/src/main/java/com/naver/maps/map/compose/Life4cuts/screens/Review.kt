@@ -1,6 +1,5 @@
 package com.naver.maps.map.compose.Life4cuts.screens
 
-import ReviewViewModel
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -41,6 +40,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -64,9 +64,13 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.storage.FirebaseStorage
 import com.naver.maps.map.compose.Life4cuts.navigation.NavRoutes
 import com.naver.maps.map.compose.demo.R
+import kotlinx.coroutines.tasks.await
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -76,14 +80,15 @@ fun ReviewScreen(
     imgId: Int,
     title: String,
     hashtag: String,
-    reviewViewModel: ReviewViewModel,
     navController: NavController,
     firestore: FirebaseFirestore
 ) {
-    val userId = reviewViewModel.userId?:""
+    val mAuth = FirebaseAuth.getInstance()
+    val currentUser = mAuth.currentUser
+    val userId = currentUser?.uid
 
     LaunchedEffect(userId) {
-        if (userId.isEmpty()) {
+        if (userId.equals("")) {
             Log.d("UserIdCheck", "UserId is null or blank")
             navController.navigate(NavRoutes.Login.route)
         } else {
@@ -97,11 +102,11 @@ fun ReviewScreen(
             .padding(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        item { ShowPhotoBooth(userId, caption, address, imgId, title, hashtag, firestore) }
+        item { ShowPhotoBooth(userId?:"", caption, address, imgId, title, hashtag, firestore) }
         item { Spacer(modifier = Modifier.height(16.dp)) }
         item { ShowPhotoexample(title) }
         item { Spacer(modifier = Modifier.height(16.dp)) }
-        item { ShowReviewList(reviewViewModel, title) }
+        item { ShowReviewList(title) }
         item { Spacer(modifier = Modifier.height(16.dp)) }
     }
 }
@@ -333,16 +338,41 @@ fun GetImageResources(title: String): List<Int> {
 }
 
 @Composable
-fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
-    val reviews = reviewViewModel.reviews
+fun ShowReviewList(title: String) {
+    val db = remember { FirebaseFirestore.getInstance() }
+    var reviews by remember { mutableStateOf(listOf<Pair<String, String>>()) }
     var showReviewinput by remember { mutableStateOf(false) }
     var reviewText by remember { mutableStateOf(TextFieldValue("")) }
     var rating by remember { mutableStateOf(0) }
     var confirmbtnText by remember { mutableStateOf("Close") }
 
     LaunchedEffect(title) {
-        reviewViewModel.loadReviews(title)
+        loadReviews(db, title) { loadedReviews ->
+            reviews = loadedReviews
+        }
     }
+
+    // 실시간 업데이트를 위해 SnapshotListener를 설정합니다.
+    DisposableEffect(title) {
+        val listenerRegistration: ListenerRegistration = db.collection("reviews").document(title).collection("userReviews")
+            .addSnapshotListener { snapshots, e ->
+                if (e != null) {
+                    Log.w("ReviewsScreen", "Listen failed.", e)
+                    return@addSnapshotListener
+                }
+
+                val fetchedReviews = snapshots?.documents?.map { doc ->
+                    Pair(doc.getString("rating") ?: "", doc.getString("text") ?: "")
+                } ?: emptyList()
+
+                reviews = fetchedReviews
+            }
+
+        onDispose {
+            listenerRegistration.remove()
+        }
+    }
+
     Column(
         modifier = Modifier
             .height(310.dp) // LazyColumn의 높이 설정
@@ -443,7 +473,7 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
                     shape = RoundedCornerShape(12.dp),
                     onClick = {
                         if (reviewText.text.isNotEmpty() && rating > 0) {
-                            reviewViewModel.addReview(title, "⭐ $rating\n ${reviewText.text}")
+                            addReview(db, title, rating, reviewText.text)
                             reviewText = TextFieldValue("") // Clear the text field
                             rating = 0 // Reset rating
                             showReviewinput = false
@@ -534,4 +564,24 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
             }
         )
     }
+}
+
+suspend fun loadReviews(db: FirebaseFirestore, title: String, onReviewsLoaded: (List<Pair<String, String>>) -> Unit) {
+    try {
+        val result = db.collection("reviews").document(title).collection("userReviews").get().await()
+        val reviews = result.documents.map { doc ->
+            Pair(doc.getString("rating") ?: "", doc.getString("text") ?: "")
+        }
+        onReviewsLoaded(reviews)
+    } catch (e: Exception) {
+        // Handle the error appropriately
+    }
+}
+
+fun addReview(db: FirebaseFirestore, title: String, rating: Int, text: String) {
+    val review = hashMapOf(
+        "rating" to "⭐ $rating",
+        "text" to text
+    )
+    db.collection("reviews").document(title).collection("userReviews").add(review)
 }
