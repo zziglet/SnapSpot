@@ -174,7 +174,7 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth , firestore: Fi
                 .width(327.dp)
                 .height(40.dp),
             onClick = {
-                loginUser(email, password, auth, navController , firestore) { error ->
+                LoginUser(email, password, auth, navController , firestore) { error ->
                     errorMessage = error
                 }
             },
@@ -261,7 +261,7 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth , firestore: Fi
     }
 }
 
-private fun loginUser(
+private fun LoginUser(
     email: String,
     password: String,
     auth: FirebaseAuth,
@@ -281,7 +281,7 @@ private fun loginUser(
                 navController.navigate(NavRoutes.Home.route)
                 val user = auth.currentUser
                 user?.let {
-                    saveUserData(it.uid,"sampledata" , firestore)
+                    SaveUserData(it.uid,"sampledata" , firestore)
                 }
             } else {
                 // Login failed
@@ -289,7 +289,7 @@ private fun loginUser(
             }
         }
 }
-private fun saveUserData(uid: String, data: String , firestore: FirebaseFirestore) {
+private fun SaveUserData(uid: String, data: String , firestore: FirebaseFirestore) {
     val userCollection = firestore.collection("users").document(uid).collection("userData")
     val dataMap = hashMapOf("dataField" to data)
 
@@ -468,7 +468,7 @@ fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
             onClick = {
                 validateInput()
                 if (emailError == null && passwordError == null)
-                    registerUser(email, password, auth, navController)
+                    RegisterUser(email, password, auth, navController)
             },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.LightGray,
@@ -490,7 +490,7 @@ fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
     }
 }
 
-private fun registerUser(
+private fun RegisterUser(
     email: String,
     password: String,
     auth: FirebaseAuth,

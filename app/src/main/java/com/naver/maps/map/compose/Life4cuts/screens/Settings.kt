@@ -1,3 +1,5 @@
+package com.naver.maps.map.compose.Life4cuts.screens
+
 import android.annotation.SuppressLint
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog

@@ -1,8 +1,7 @@
 package com.naver.maps.map.compose.Life4cuts.navigation
 
-import ProfileScreen
-import com.naver.maps.map.compose.Life4cuts.viewModel.ReviewViewModel
-import SettingsScreen
+
+import ReviewViewModel
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -19,13 +18,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.naver.maps.map.compose.Life4cuts.screens.AlbumScreen
 import com.naver.maps.map.compose.Life4cuts.screens.BookmarkScreen
+
 import com.naver.maps.map.compose.Life4cuts.viewModel.FavoriteViewModel
 import com.naver.maps.map.compose.Life4cuts.screens.HomeScreen
 import com.naver.maps.map.compose.Life4cuts.screens.LoginScreen
 import com.naver.maps.map.compose.Life4cuts.screens.PhotoScreen
 import com.naver.maps.map.compose.Life4cuts.screens.PlaceScreen
+import com.naver.maps.map.compose.Life4cuts.screens.ProfileScreen
+
 import com.naver.maps.map.compose.Life4cuts.screens.RegisterScreen
 import com.naver.maps.map.compose.Life4cuts.screens.ReviewScreen
+import com.naver.maps.map.compose.Life4cuts.screens.SettingsScreen
 import kotlinx.coroutines.tasks.await
 
 

@@ -1,6 +1,6 @@
 package com.naver.maps.map.compose.Life4cuts.screens
 
-import com.naver.maps.map.compose.Life4cuts.viewModel.ReviewViewModel
+import ReviewViewModel
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -33,7 +33,6 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
-import androidx.compose.material3.AlertDialogDefaults.containerColor
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -149,7 +148,7 @@ fun ShowPhotoBooth(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "SnapSpot",
+                text = title,
                 style = TextStyle(
                     fontSize = 20.sp,
                     lineHeight = 30.sp,
@@ -196,6 +195,7 @@ fun ShowPhotoBooth(
         }
         Text(
             text = hashtag,
+            modifier = Modifier.fillMaxWidth(),
             style = TextStyle(
                 fontSize = 12.sp,
                 lineHeight = 18.sp,
@@ -283,6 +283,9 @@ fun ShowPhotoexample(title: String) {
                     Image(
                         painter = painterResource(id = imageResId),
                         contentDescription = null,
+                        modifier = Modifier
+                            .width(122.dp)
+                            .height(134.dp),
                         contentScale = ContentScale.Crop
                     )
                 }
@@ -344,7 +347,7 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
     }
     Column(
         modifier = Modifier
-            .height(250.dp) // LazyColumn의 높이 설정
+            .height(310.dp) // LazyColumn의 높이 설정
     ) {
         Row() {
             Text(text = "Review",
@@ -358,6 +361,7 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
             FloatingActionButton(
                 onClick = {
                     showReviewinput = true
+                    reviewText = TextFieldValue("")
                 },
                 containerColor = Color.White,
                 contentColor = Color.Black,
@@ -399,16 +403,26 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
                                     elevation = 20.dp, spotColor = Color(0x1A000000),
                                     ambientColor = Color(0x1A000000)
                                 )
-                                .border(
-                                    width = 1.dp,
-                                    color = Color(0xFFF7F7F7),
-                                    shape = RoundedCornerShape(size = 12.dp)
-                                )
                                 .width(332.dp)
-                                .height(60.dp)
+                                .height(50.dp)
                         ) {
-                            //review 파싱 어케하나용..
-                            Text(text = review)
+                            Text(text = review.first,
+                                style = TextStyle(
+                                    fontSize = 15.sp,
+                                    lineHeight = 18.sp,
+                                    fontFamily = FontFamily(Font(R.font.inter)),
+                                    fontWeight = FontWeight(500),
+                                    color = Color(0xFF000000)
+                                    ))  // 별점
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(text = review.second,
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    lineHeight = 19.5.sp,
+                                    fontFamily = FontFamily(Font(R.font.inter)),
+                                    fontWeight = FontWeight(400),
+                                    color = Color(0xFF000000)
+                                    )) // 리뷰 텍스트
                         }
                     }
                 }
@@ -417,7 +431,9 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
     }
     if(showReviewinput){
         AlertDialog(
-            onDismissRequest = { reviewText = TextFieldValue(""); confirmbtnText = "Close" },
+            onDismissRequest = { reviewText = TextFieldValue("")
+                rating = 0
+                confirmbtnText = "Close"},
             confirmButton = {
                 Button(
                     colors = ButtonDefaults.buttonColors(
@@ -429,11 +445,12 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
                     shape = RoundedCornerShape(12.dp),
                     onClick = {
                         if (reviewText.text.isNotEmpty() && rating > 0) {
-                            reviewViewModel.addReview(title, "⭐ $rating ${reviewText.text}")
+                            reviewViewModel.addReview(title, "⭐ $rating\n ${reviewText.text}")
                             reviewText = TextFieldValue("") // Clear the text field
                             rating = 0 // Reset rating
-                        }else if(reviewText.text.isEmpty()){
                             showReviewinput = false
+                            confirmbtnText = "Close"
+                        }else if(reviewText.text.isEmpty()){
                             confirmbtnText = "Close"
                         }
                         showReviewinput = false
@@ -496,9 +513,11 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
                                         }},
                         decorationBox = { innerTextField ->
                             Row(
-                                modifier = Modifier.padding(start = 5.dp)) {
+                                modifier = Modifier.padding(start = 5.dp),
+                                verticalAlignment = Alignment.CenterVertically) {
                                     Text(
-                                        text = if (reviewText.equals("")) "Write a review" else "",
+                                        text = if (reviewText.equals(null)) "Write a review" else
+                                            "",
                                         style = TextStyle(
                                             fontSize = 14.sp,
                                             lineHeight = 19.6.sp,

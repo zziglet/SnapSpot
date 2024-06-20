@@ -38,7 +38,7 @@ fun BookmarkScreen(auth: FirebaseAuth, firestore: FirebaseFirestore, bookmarkedI
     val selectedImageId = remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(bookmarkedImages) {
-        val resourceIds = loadAllPhotosFromLocal(context)
+        val resourceIds = LoadAllPhotosFromLocal(context)
         val bitmaps = resourceIds.mapIndexedNotNull { index, resId ->
             val imageId = "image_$index"
             if (bookmarkedImages.contains(imageId)) {
@@ -125,6 +125,3 @@ fun BookmarkScreen(auth: FirebaseAuth, firestore: FirebaseFirestore, bookmarkedI
         }
     }
 }
-
-
-//////
