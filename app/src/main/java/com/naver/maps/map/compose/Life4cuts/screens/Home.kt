@@ -46,7 +46,6 @@ import com.naver.maps.map.compose.NaverMap
 import com.naver.maps.map.compose.demo.R
 import com.naver.maps.map.compose.rememberCameraPositionState
 
-//이 파일 나중에 Home.kt로 옮겨가야 할 것 같아요 근데 무서워서 냅뒀어요
 
 @Composable
 @OptIn(ExperimentalNaverMapApi::class)

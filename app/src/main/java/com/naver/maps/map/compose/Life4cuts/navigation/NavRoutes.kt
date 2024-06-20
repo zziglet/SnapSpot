@@ -9,9 +9,6 @@ sealed class NavRoutes (val route: String) {
     //
     object Settings : NavRoutes("Settings")
     object profile : NavRoutes("profile")
-    object public : NavRoutes("public")
-    object favorites : NavRoutes("favorites")
-    object account : NavRoutes("account")
     //
     object  Login : NavRoutes("Login")
     object Register : NavRoutes("Register")

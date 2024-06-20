@@ -7,7 +7,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -215,8 +217,26 @@ fun ProfileScreen(navController: NavController, auth: FirebaseAuth, firestore: F
     ) {
         Text(text = nickname)
         Spacer(modifier = Modifier.height(20.dp))
-        Button(onClick = { showDialog = true }) {
-            Text(text = "별명 등록/수정하기")
+        Button(modifier = Modifier
+            .width(327.dp)
+            .height(40.dp),
+            onClick = { showDialog = true},
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.LightGray,
+                contentColor = Color.Black,
+                disabledContainerColor = Color.DarkGray,
+                disabledContentColor = Color.White
+            ),
+            shape = RoundedCornerShape(12.dp)
+        ) {
+            Text(text = "별명 등록/수정하기",
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    lineHeight = 19.6.sp,
+                    fontFamily = FontFamily(Font(R.font.inter)),
+                    fontWeight = FontWeight(500),
+                    color = Color(0xFF000000),
+                ))
         }
     }
 
@@ -231,8 +251,10 @@ fun ProfileScreen(navController: NavController, auth: FirebaseAuth, firestore: F
                 nickname = newNickname
             }
             dialog.dismiss()
+            navController.navigate(NavRoutes.Settings.route)
         }
-        builder.setNegativeButton("취소") { dialog, _ -> dialog.cancel() }
+        builder.setNegativeButton("취소") { dialog, _ -> dialog.cancel()
+            navController.navigate(NavRoutes.Settings.route)}
         builder.show()
         showDialog = false
     }

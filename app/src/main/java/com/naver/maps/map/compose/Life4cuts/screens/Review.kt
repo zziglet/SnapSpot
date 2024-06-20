@@ -253,7 +253,7 @@ fun ShowPhotoBooth(
 @Composable
 fun ShowPhotoexample(title: String) {
     var selectedImageResId by remember { mutableStateOf<Int?>(null) }
-    val imageResources = getImageResources(title) // title에 해당하는 이미지 리소스를 가져옴
+    val imageResources = GetImageResources(title) // title에 해당하는 이미지 리소스를 가져옴
 
     Column(
         modifier = Modifier
@@ -316,7 +316,7 @@ fun ShowPhotoexample(title: String) {
 }
 
 @Composable
-fun getImageResources(title: String): List<Int> {
+fun GetImageResources(title: String): List<Int> {
     val context = LocalContext.current
     val imageResources = mutableListOf<Int>()
     var index = 0
@@ -505,7 +505,7 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
                             keyboardType = KeyboardType.Text,  // 기본 텍스트 입력 타입 설정
                             imeAction = ImeAction.Done         // IME 액션 설정 (예: 완료)
                         ),
-                        onValueChange = { reviewText = it ;
+                        onValueChange = { reviewText = it
                                         if(reviewText.equals("")){
                                             confirmbtnText = "Close"
                                         }else{
