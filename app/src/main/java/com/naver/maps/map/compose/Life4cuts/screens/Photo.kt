@@ -36,9 +36,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.naver.maps.map.compose.demo.R
 import kotlinx.coroutines.tasks.await
 
-
-/////
-
 //기존 LoadPhotosFromLocal함수는 Composable 함수라 같은 기능하는 함수 추가
 fun LoadAllPhotosFromLocal(context: Context): List<Int> {
     val drawableClass = R.drawable::class.java
@@ -58,7 +55,6 @@ fun LoadAllPhotosFromLocal(context: Context): List<Int> {
     }
     return resourceIdList
 }
-
 
 // 사진 클릭하여 확대 시 북마크 on/off 기능 가능
 @Composable
@@ -100,7 +96,7 @@ fun PhotoScreen(auth: FirebaseAuth, firestore: FirebaseFirestore, bookmarkedImag
                     items(imageList.value.size) { index ->
                         val image = imageList.value[index]
                         val imageId = "image_$index"
-                        val isBookmarked = bookmarkedImages.contains(imageId)
+
                         Image(
                             bitmap = image,
                             contentDescription = null,

@@ -37,7 +37,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -70,7 +69,6 @@ import com.naver.maps.map.compose.Life4cuts.navigation.NavRoutes
 import com.naver.maps.map.compose.demo.R
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReviewScreen(
     caption: String,
@@ -308,7 +306,7 @@ fun ShowPhotoexample(title: String) {
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(400.dp) // 높이를 적절하게 조정하세요
+                        .height(400.dp)
                 )
             }
         )
@@ -531,8 +529,6 @@ fun ShowReviewList(reviewViewModel: ReviewViewModel, title: String) {
                                 }
                             }
                         )
-                    Spacer(modifier = Modifier.height(50.dp))
-                    Spacer(modifier = Modifier.width(70.dp))
                 }
                 
             }

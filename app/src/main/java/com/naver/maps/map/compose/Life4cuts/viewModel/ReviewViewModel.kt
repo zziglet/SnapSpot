@@ -2,7 +2,6 @@ import android.annotation.SuppressLint
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import java.io.File
 
 class ReviewViewModel : ViewModel() {
@@ -47,33 +46,4 @@ class ReviewViewModel : ViewModel() {
         reviews.add(Pair(rating, reviewText))
     }
 
-    // 즐겨찾기 추가
-    private val firestore = FirebaseFirestore.getInstance()
-
-    fun toggleFavorite(title: String) {
-        userId?.let { uid ->
-            val favoritesRef = firestore.collection("users").document(uid).collection("favorites")
-            val favoriteDoc = favoritesRef.document(title)
-
-            favoriteDoc.get().addOnSuccessListener { document ->
-                if (document.exists()) {
-                    // If already favorite, remove it
-                    favoriteDoc.delete()
-                } else {
-                    // If not favorite, add it
-                    val data = hashMapOf("title" to title)
-                    favoriteDoc.set(data)
-                }
-            }
-        }
-    }
-
-    fun isFavorite(title: String, onComplete: (Boolean) -> Unit) {
-        userId?.let { uid ->
-            val favoritesRef = firestore.collection("users").document(uid).collection("favorites")
-            favoritesRef.document(title).get().addOnSuccessListener { document ->
-                onComplete(document.exists())
-            }
-        }
-    }
 }
