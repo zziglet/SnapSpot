@@ -1,5 +1,6 @@
 package com.naver.maps.map.compose.Life4cuts.navigation
 
+
 import ReviewViewModel
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -15,17 +16,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.naver.maps.map.compose.Life4cuts.screens.AccountSettingsScreen
 import com.naver.maps.map.compose.Life4cuts.screens.AlbumScreen
 import com.naver.maps.map.compose.Life4cuts.screens.BookmarkScreen
-import com.naver.maps.map.compose.Life4cuts.screens.FavoritesScreen
+
 import com.naver.maps.map.compose.Life4cuts.viewModel.FavoriteViewModel
 import com.naver.maps.map.compose.Life4cuts.screens.HomeScreen
 import com.naver.maps.map.compose.Life4cuts.screens.LoginScreen
 import com.naver.maps.map.compose.Life4cuts.screens.PhotoScreen
 import com.naver.maps.map.compose.Life4cuts.screens.PlaceScreen
 import com.naver.maps.map.compose.Life4cuts.screens.ProfileScreen
-import com.naver.maps.map.compose.Life4cuts.screens.PublicSettingScreen
+
 import com.naver.maps.map.compose.Life4cuts.screens.RegisterScreen
 import com.naver.maps.map.compose.Life4cuts.screens.ReviewScreen
 import com.naver.maps.map.compose.Life4cuts.screens.SettingsScreen
@@ -109,31 +109,16 @@ fun NavigationHost(navController: NavHostController, auth: FirebaseAuth, firesto
             ReviewScreen(caption, address, img, title, hashtag, viewModel, navController, firestore)
         }
 
-        //
+
         composable(NavRoutes.Settings.route){
-            SettingsScreen(navController)
+            val favoriteViewModel: FavoriteViewModel = viewModel()
+            SettingsScreen(navController, auth, firestore, favoriteViewModel, onClearBookmarks =
+            { bookmarkedImages = emptySet() })
         }
         composable(route = NavRoutes.profile.route) {
             ProfileScreen(navController, auth, firestore)
         }
 
-        composable(route = NavRoutes.public.route) {
-            val favoriteViewModel: FavoriteViewModel = viewModel()
-            PublicSettingScreen(navController, auth, firestore, favoriteViewModel) // 수정된 부분
-        }
 
-        composable(route = NavRoutes.favorites.route) {
-            FavoritesScreen(
-                navController = navController,
-                auth = auth,
-                firestore = firestore,
-                onClearBookmarks = { bookmarkedImages = emptySet() } // 수정된 부분
-            )
-        }
-
-        composable(route = NavRoutes.account.route) {
-            AccountSettingsScreen(navController, auth)
-        }
-        //
     }
 }

@@ -36,7 +36,18 @@ import kotlinx.coroutines.tasks.await
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun SettingsScreen(navController: NavController) {
+fun SettingsScreen(
+    navController: NavController,
+    auth: FirebaseAuth,
+    firestore: FirebaseFirestore,
+    favoriteViewModel: FavoriteViewModel,
+    onClearBookmarks: () -> Unit,
+) {
+
+    var showClearDialog by remember { mutableStateOf(false) } //장소초기화
+    var showClearBookmarksDialog by remember { mutableStateOf(false) } //사진초기화
+    var showLogoutDialog by remember { mutableStateOf(false) } //로그아웃
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -78,7 +89,8 @@ fun SettingsScreen(navController: NavController) {
                 SettingsItem(
                     icon = painterResource(id = R.drawable.baseline_lock_24),
                     text = "즐겨찾기한 장소 초기화",
-                    onClick = { navController.navigate("public") }
+//                    onClick = { navController.navigate("public") }
+                    onClick = { showClearDialog = true }
                 )
             }
 
@@ -87,18 +99,56 @@ fun SettingsScreen(navController: NavController) {
                 SettingsItem(
                     icon = painterResource(id = R.drawable.baseline_star_24),
                     text = "북마크한 사진 초기화",
-                    onClick = { navController.navigate("favorites") }
+                    onClick = { showClearBookmarksDialog = true }
                 )
             }
             item {
                 SettingsItem(
                     icon = painterResource(id = R.drawable.baseline_settings_24),
                     text = "로그아웃",
-                    onClick = { navController.navigate("account") }
+                    onClick = { showLogoutDialog = true }
                 )
             }
         }
     }
+
+    if (showClearDialog) {
+        ClearFavoritesConfirmationDialog(
+            onConfirm = {
+                clearAllFavorites(auth, firestore, favoriteViewModel)
+                showClearDialog = false
+            },
+            onDismiss = {
+                showClearDialog = false
+            }
+        )
+    }
+
+    if (showClearBookmarksDialog) {
+        ClearBookmarksConfirmationDialog(
+            onConfirm = {
+                clearAllBookmarks(auth, firestore, onClearBookmarks)
+                showClearBookmarksDialog = false
+            },
+            onDismiss = {
+                showClearBookmarksDialog = false
+            }
+        )
+    }
+
+    if (showLogoutDialog) {
+        LogoutConfirmationDialog(
+            onConfirm = {
+                auth.signOut()
+                navController.navigate(NavRoutes.Login.route) {
+                    popUpTo(NavRoutes.Login.route) { inclusive = true }
+                }
+                showLogoutDialog = false
+            },
+            onDismiss = { showLogoutDialog = false }
+        )
+    }
+
 }
 
 @Composable
@@ -187,35 +237,8 @@ fun ProfileScreen(navController: NavController, auth: FirebaseAuth, firestore: F
         showDialog = false
     }
 }
-//
 
 //장소 즐겨찾기 초기화
-@Composable
-fun PublicSettingScreen(navController: NavController, auth: FirebaseAuth, firestore: FirebaseFirestore, favoriteViewModel: FavoriteViewModel) {
-    var showClearDialog by remember { mutableStateOf(false) }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Button(onClick = { showClearDialog = true }) {
-            Text(text = "즐겨찾기 초기화")
-        }
-
-        if (showClearDialog) {
-            ClearFavoritesConfirmationDialog(
-                onConfirm = {
-                    clearAllFavorites(auth, firestore, favoriteViewModel)
-                    showClearDialog = false
-                },
-                onDismiss = { showClearDialog = false }
-            )
-        }
-    }
-}
 
 @Composable
 fun ClearFavoritesConfirmationDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
@@ -237,7 +260,11 @@ fun ClearFavoritesConfirmationDialog(onConfirm: () -> Unit, onDismiss: () -> Uni
     }
 }
 
-private fun clearAllFavorites(auth: FirebaseAuth, firestore: FirebaseFirestore, favoriteViewModel: FavoriteViewModel) {
+private fun clearAllFavorites(
+    auth: FirebaseAuth,
+    firestore: FirebaseFirestore,
+    favoriteViewModel: FavoriteViewModel,
+) {
     val currentUser = auth.currentUser ?: return
     firestore.collection("users").document(currentUser.uid).collection("favorites")
         .get()
@@ -253,33 +280,6 @@ private fun clearAllFavorites(auth: FirebaseAuth, firestore: FirebaseFirestore, 
 }
 
 //사진 즐겨찾기 초기화
-@Composable
-fun FavoritesScreen(navController: NavController, auth: FirebaseAuth, firestore: FirebaseFirestore, onClearBookmarks: () -> Unit) {
-    var showClearDialog by remember { mutableStateOf(false) }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Button(onClick = { showClearDialog = true }) {
-            Text(text = "북마크 초기화")
-        }
-
-        if (showClearDialog) {
-            ClearBookmarksConfirmationDialog(
-                onConfirm = {
-                    clearAllBookmarks(auth, firestore, onClearBookmarks)
-                    showClearDialog = false
-                },
-                onDismiss = { showClearDialog = false }
-            )
-        }
-    }
-}
-
 @Composable
 fun ClearBookmarksConfirmationDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
     val context = LocalContext.current
@@ -300,7 +300,11 @@ fun ClearBookmarksConfirmationDialog(onConfirm: () -> Unit, onDismiss: () -> Uni
     }
 }
 
-private fun clearAllBookmarks(auth: FirebaseAuth, firestore: FirebaseFirestore, onClearBookmarks: () -> Unit) {
+private fun clearAllBookmarks(
+    auth: FirebaseAuth,
+    firestore: FirebaseFirestore,
+    onClearBookmarks: () -> Unit,
+) {
     val currentUser = auth.currentUser ?: return
     firestore.collection("users").document(currentUser.uid).collection("bookmarks")
         .get()
@@ -315,38 +319,7 @@ private fun clearAllBookmarks(auth: FirebaseAuth, firestore: FirebaseFirestore, 
         }
 }
 
-//
 
-
-@Composable
-fun AccountSettingsScreen(navController: NavController, auth: FirebaseAuth) {
-    var showLogoutDialog by remember { mutableStateOf(false) }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Button(onClick = { showLogoutDialog = true }) {
-            Text(text = "로그아웃")
-        }
-
-        if (showLogoutDialog) {
-            LogoutConfirmationDialog(
-                onConfirm = {
-                    auth.signOut()
-                    navController.navigate(NavRoutes.Login.route) {
-                        popUpTo(NavRoutes.Login.route) { inclusive = true }
-                    }
-                    showLogoutDialog = false
-                },
-                onDismiss = { showLogoutDialog = false }
-            )
-        }
-    }
-}
 
 //로그아웃 팝업
 @Composable
