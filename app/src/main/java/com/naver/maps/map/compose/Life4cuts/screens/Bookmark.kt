@@ -30,7 +30,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 // 로그인 시 기존 북마크 기록 남음, 사진을 선택하여 확대한 경우 북마크 해제 가능, 이때 이 작업은 전체 포즈 출력의 이미지에도 동일하게 적용됨
 @Composable
-fun BookmarkScreen(auth: FirebaseAuth, firestore: FirebaseFirestore, bookmarkedImages: Set<String>, onUpdateBookmarks: (Set<String>) -> Unit) {
+fun BookmarkScreen(
+    auth: FirebaseAuth,
+    firestore: FirebaseFirestore,
+    bookmarkedImages: Set<String>,
+    onUpdateBookmarks: (Set<String>) -> Unit,
+) {
     val context = LocalContext.current
     val imageList = remember { mutableStateOf<List<Pair<String, ImageBitmap>>>(emptyList()) }
     val showDialog = remember { mutableStateOf(false) }
@@ -50,10 +55,12 @@ fun BookmarkScreen(auth: FirebaseAuth, firestore: FirebaseFirestore, bookmarkedI
         imageList.value = bitmaps
     }
 
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .padding(10.dp),
-        contentAlignment = Alignment.TopCenter) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(10.dp),
+        contentAlignment = Alignment.TopCenter
+    ) {
         if (imageList.value.isNotEmpty()) {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(3),
@@ -105,20 +112,32 @@ fun BookmarkScreen(auth: FirebaseAuth, firestore: FirebaseFirestore, bookmarkedI
                                 val newBookmarks = bookmarkedImages.toMutableSet()
                                 if (isBookmarked) {
                                     newBookmarks.remove(imageId)
-                                    firestore.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").document(imageId).delete()
+                                    firestore
+                                        .collection("users")
+                                        .document(auth.currentUser!!.uid)
+                                        .collection("bookmarks")
+                                        .document(imageId)
+                                        .delete()
                                 } else {
                                     newBookmarks.add(imageId)
-                                    firestore.collection("users").document(auth.currentUser!!.uid).collection("bookmarks").document(imageId).set(mapOf("id" to imageId))
+                                    firestore
+                                        .collection("users")
+                                        .document(auth.currentUser!!.uid)
+                                        .collection("bookmarks")
+                                        .document(imageId)
+                                        .set(mapOf("id" to imageId))
                                 }
                                 onUpdateBookmarks(newBookmarks)
                             }
                     )
                 },
                 confirmButton = {
-                    IconButton(onClick = { showDialog.value = false  }) {
-                        Icon(imageVector = Icons.Default.Close,
+                    IconButton(onClick = { showDialog.value = false }) {
+                        Icon(
+                            imageVector = Icons.Default.Close,
                             tint = Color.Black,
-                            contentDescription = "Close")
+                            contentDescription = "Close"
+                        )
                     }
                 }
             )

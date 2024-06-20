@@ -17,14 +17,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.naver.maps.map.compose.Life4cuts.screens.AlbumScreen
 import com.naver.maps.map.compose.Life4cuts.screens.BookmarkScreen
-
 import com.naver.maps.map.compose.Life4cuts.viewModel.FavoriteViewModel
 import com.naver.maps.map.compose.Life4cuts.screens.HomeScreen
 import com.naver.maps.map.compose.Life4cuts.screens.LoginScreen
 import com.naver.maps.map.compose.Life4cuts.screens.PhotoScreen
 import com.naver.maps.map.compose.Life4cuts.screens.PlaceScreen
 import com.naver.maps.map.compose.Life4cuts.screens.ProfileScreen
-
 import com.naver.maps.map.compose.Life4cuts.screens.RegisterScreen
 import com.naver.maps.map.compose.Life4cuts.screens.ReviewScreen
 import com.naver.maps.map.compose.Life4cuts.screens.SettingsScreen
@@ -32,7 +30,11 @@ import kotlinx.coroutines.tasks.await
 
 
 @Composable
-fun NavigationHost(navController: NavHostController, auth: FirebaseAuth, firestore: FirebaseFirestore) {
+fun NavigationHost(
+    navController: NavHostController,
+    auth: FirebaseAuth,
+    firestore: FirebaseFirestore,
+) {
     //북마크 이미지 저장을 위해 추가
     var bookmarkedImages by remember { mutableStateOf(setOf<String>()) }
 
@@ -48,17 +50,17 @@ fun NavigationHost(navController: NavHostController, auth: FirebaseAuth, firesto
     NavHost(
         navController = navController,
         startDestination = NavRoutes.Login.route
-    ){
-        composable(NavRoutes.Login.route){
-            LoginScreen(navController,auth , firestore)
+    ) {
+        composable(NavRoutes.Login.route) {
+            LoginScreen(navController, auth, firestore)
         }
-        composable(NavRoutes.Register.route){
-            RegisterScreen(navController,auth)
+        composable(NavRoutes.Register.route) {
+            RegisterScreen(navController, auth)
         }
-        composable(NavRoutes.Home.route){
+        composable(NavRoutes.Home.route) {
             HomeScreen(navController)
         }
-        composable(NavRoutes.Photo.route){
+        composable(NavRoutes.Photo.route) {
             //PhotoScreen 수정
             PhotoScreen(
                 auth = auth,
@@ -68,14 +70,14 @@ fun NavigationHost(navController: NavHostController, auth: FirebaseAuth, firesto
             )
 
         }
-        composable(NavRoutes.Album.route){
+        composable(NavRoutes.Album.route) {
             AlbumScreen(navController)
         }
-        composable(NavRoutes.Place.route){
+        composable(NavRoutes.Place.route) {
             val viewModel: FavoriteViewModel = viewModel()
             PlaceScreen(navController, viewModel, firestore)
         }
-        composable(NavRoutes.Bookmark.route){
+        composable(NavRoutes.Bookmark.route) {
             //BookmarkScreen 수정
             BookmarkScreen(
                 auth = auth,
@@ -85,7 +87,7 @@ fun NavigationHost(navController: NavHostController, auth: FirebaseAuth, firesto
             )
 
         }
-        composable(NavRoutes.MyAlbum.route){
+        composable(NavRoutes.MyAlbum.route) {
             AlbumScreen(navController)
         }
         composable(
@@ -107,7 +109,7 @@ fun NavigationHost(navController: NavHostController, auth: FirebaseAuth, firesto
         }
 
 
-        composable(NavRoutes.Settings.route){
+        composable(NavRoutes.Settings.route) {
             val favoriteViewModel: FavoriteViewModel = viewModel()
             SettingsScreen(navController, auth, firestore, favoriteViewModel, onClearBookmarks =
             { bookmarkedImages = emptySet() })

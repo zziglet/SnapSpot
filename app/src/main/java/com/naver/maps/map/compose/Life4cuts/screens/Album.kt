@@ -143,7 +143,7 @@ fun UploadAlbum(navController: NavController) {
                     keyboardType = KeyboardType.Text,  // 기본 텍스트 입력 타입 설정
                     imeAction = ImeAction.Done         // IME 액션 설정 (예: 완료)
                 ),
-                onValueChange = { description = it},
+                onValueChange = { description = it },
                 decorationBox = { innerTextField ->
                     Row(
                         modifier = Modifier.padding(start = 5.dp),
@@ -179,7 +179,8 @@ fun UploadAlbum(navController: NavController) {
                 ),
                 onClick = {
                     if (currentUser != null && imageUri != null) {
-                        val fileReference = mStorageRef.child("uploads/${currentUser.uid}/${System.currentTimeMillis()}.jpg")
+                        val fileReference =
+                            mStorageRef.child("uploads/${currentUser.uid}/${System.currentTimeMillis()}.jpg")
                         val uploadTask = fileReference.putFile(imageUri!!)
                         uploadTask.addOnSuccessListener {
                             fileReference.downloadUrl.addOnSuccessListener { url ->
@@ -191,18 +192,34 @@ fun UploadAlbum(navController: NavController) {
                                 )
                                 db.collection("uploads").add(data)
                                     .addOnSuccessListener {
-                                        Toast.makeText(context, "Upload successful", Toast.LENGTH_LONG).show()
+                                        Toast.makeText(
+                                            context,
+                                            "Upload successful",
+                                            Toast.LENGTH_LONG
+                                        ).show()
                                         navController.navigate("myalbum")
                                     }
                                     .addOnFailureListener { e ->
-                                        Toast.makeText(context, "Failed to save data: ${e.message}", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(
+                                            context,
+                                            "Failed to save data: ${e.message}",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     }
                             }
                         }.addOnFailureListener { e ->
-                            Toast.makeText(context, "Upload failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                context,
+                                "Upload failed: ${e.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     } else {
-                        Toast.makeText(context, "No image selected or user not logged in", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            "No image selected or user not logged in",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             ) {
@@ -244,7 +261,8 @@ fun AlbumScreen(navController: NavController) {
                 imageInfos = infos
             } catch (e: Exception) {
                 Log.e("AlbumScreen", "Error fetching images", e)
-                Toast.makeText(context, "Error fetching images: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Error fetching images: ${e.message}", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
@@ -288,23 +306,29 @@ fun AlbumScreen(navController: NavController) {
                                     },
                                 contentScale = ContentScale.Crop
                             )
-                            Text(text = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date
-                                (info.timestamp)),
+                            Text(
+                                text = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(
+                                    Date
+                                        (info.timestamp)
+                                ),
                                 style = TextStyle(
                                     fontSize = 15.sp,
                                     lineHeight = 19.5.sp,
                                     fontFamily = FontFamily(Font(R.font.inter)),
                                     fontWeight = FontWeight(500),
                                     color = Color(0xFF000000)
-                                ))
-                            Text(text = info.text,
+                                )
+                            )
+                            Text(
+                                text = info.text,
                                 style = TextStyle(
                                     fontSize = 14.sp,
                                     lineHeight = 19.6.sp,
                                     fontFamily = FontFamily(Font(R.font.inter)),
                                     fontWeight = FontWeight(400),
                                     color = Color(0x80000000),
-                                ))
+                                )
+                            )
                         }
                     }
                 }

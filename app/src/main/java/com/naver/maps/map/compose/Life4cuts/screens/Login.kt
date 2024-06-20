@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Divider
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -33,8 +32,6 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -46,7 +43,7 @@ import com.naver.maps.map.compose.Life4cuts.navigation.NavRoutes
 import com.naver.maps.map.compose.demo.R
 
 @Composable
-fun LoginScreen(navController: NavController, auth: FirebaseAuth , firestore: FirebaseFirestore) {
+fun LoginScreen(navController: NavController, auth: FirebaseAuth, firestore: FirebaseFirestore) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
@@ -131,7 +128,7 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth , firestore: Fi
                             fontFamily = FontFamily(Font(R.font.inter)),
                             fontWeight = FontWeight(400),
                             color = Color(0xFF828282)
-                            )
+                        )
                     )
                     Spacer(modifier = Modifier.width(width = 8.dp))
                     innerTextField()
@@ -174,7 +171,7 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth , firestore: Fi
                 .width(327.dp)
                 .height(40.dp),
             onClick = {
-                LoginUser(email, password, auth, navController , firestore) { error ->
+                LoginUser(email, password, auth, navController, firestore) { error ->
                     errorMessage = error
                 }
             },
@@ -194,7 +191,7 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth , firestore: Fi
                     fontFamily = FontFamily(Font(R.font.inter)),
                     fontWeight = FontWeight(500),
                     color = Color(0xFFFFFFFF),
-                    )
+                )
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
@@ -213,10 +210,12 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth , firestore: Fi
             horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Divider(modifier = Modifier
-                .width(80.5.dp)
-                .height(1.dp)
-                .background(color = Color(0xFFE6E6E6)))
+            Divider(
+                modifier = Modifier
+                    .width(80.5.dp)
+                    .height(1.dp)
+                    .background(color = Color(0xFFE6E6E6))
+            )
             Text(
                 text = "or the account not",
                 style = TextStyle(
@@ -228,10 +227,12 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth , firestore: Fi
                     textAlign = TextAlign.Center,
                 )
             )
-            Divider(modifier = Modifier
-                .width(80.5.dp)
-                .height(1.dp)
-                .background(color = Color(0xFFE6E6E6)))
+            Divider(
+                modifier = Modifier
+                    .width(80.5.dp)
+                    .height(1.dp)
+                    .background(color = Color(0xFFE6E6E6))
+            )
         }
         Spacer(modifier = Modifier.height(24.dp))
         Button(
@@ -255,7 +256,7 @@ fun LoginScreen(navController: NavController, auth: FirebaseAuth , firestore: Fi
                     fontFamily = FontFamily(Font(R.font.inter)),
                     fontWeight = FontWeight(500),
                     color = Color(0xFF000000),
-                    )
+                )
             )
         }
     }
@@ -281,7 +282,7 @@ private fun LoginUser(
                 navController.navigate(NavRoutes.Home.route)
                 val user = auth.currentUser
                 user?.let {
-                    SaveUserData(it.uid,"sampledata" , firestore)
+                    SaveUserData(it.uid, "sampledata", firestore)
                 }
             } else {
                 // Login failed
@@ -289,7 +290,8 @@ private fun LoginUser(
             }
         }
 }
-private fun SaveUserData(uid: String, data: String , firestore: FirebaseFirestore) {
+
+private fun SaveUserData(uid: String, data: String, firestore: FirebaseFirestore) {
     val userCollection = firestore.collection("users").document(uid).collection("userData")
     val dataMap = hashMapOf("dataField" to data)
 
@@ -478,14 +480,16 @@ fun RegisterScreen(navController: NavController, auth: FirebaseAuth) {
             ),
             shape = RoundedCornerShape(12.dp)
         ) {
-            Text("Sign up",
+            Text(
+                "Sign up",
                 style = TextStyle(
                     fontSize = 14.sp,
                     lineHeight = 19.6.sp,
                     fontFamily = FontFamily(Font(R.font.inter)),
                     fontWeight = FontWeight(500),
                     color = Color(0xFF000000),
-                ))
+                )
+            )
         }
     }
 }

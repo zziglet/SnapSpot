@@ -56,10 +56,11 @@ fun HomeScreen(navController: NavController) {
         position = CameraPosition(konkuk, 15.0)
     }
     var selectedMarkerInfo by remember { mutableStateOf<PhotoBoothInfo?>(null) }
-    Column(modifier = Modifier.padding(10.dp),
+    Column(
+        modifier = Modifier.padding(10.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+    ) {
         Column(
             modifier = Modifier
                 .shadow(12.dp, RectangleShape)
@@ -70,7 +71,7 @@ fun HomeScreen(navController: NavController) {
                 .padding(start = 19.dp, top = 16.dp, end = 16.dp)
                 .clickable {
 
-                    if(selectedMarkerInfo != null)
+                    if (selectedMarkerInfo != null)
                         navController.navigate(
                             "review/${selectedMarkerInfo?.caption}/${selectedMarkerInfo?.address}" +
                                 "/${selectedMarkerInfo?.imgId}/${selectedMarkerInfo?.title}" +
@@ -117,10 +118,11 @@ fun HomeScreen(navController: NavController) {
                         .width(70.dp)
                         .height(61.dp)
                 )
-                Column(modifier = Modifier.fillMaxSize(),
+                Column(
+                    modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.spacedBy(2.dp, Alignment.Top),
                     horizontalAlignment = Alignment.Start
-                    ) {
+                ) {
                     Text(
                         text = selectedMarkerInfo?.caption ?: "Where",
                         style = TextStyle(
@@ -128,7 +130,8 @@ fun HomeScreen(navController: NavController) {
                             lineHeight = 24.sp,
                             fontFamily = FontFamily(Font(R.font.inter)),
                             fontWeight = FontWeight(500),
-                            color = Color(0xFF000000))
+                            color = Color(0xFF000000)
+                        )
                     )
                     Text(
                         text = selectedMarkerInfo?.address ?: "서울특별시 광진구 화양동",
@@ -138,7 +141,7 @@ fun HomeScreen(navController: NavController) {
                             fontFamily = FontFamily(Font(R.font.inter)),
                             fontWeight = FontWeight(500),
                             color = Color(0xFF828282),
-                            )
+                        )
 
                     )
                 }
