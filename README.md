@@ -26,12 +26,19 @@
 
 ## 앱 시연
 
+![image](https://github.com/user-attachments/assets/faccfcc0-5dc7-4433-8438-9338880f8b9d)
+
+![image](https://github.com/user-attachments/assets/0847b519-1bc7-49c1-af05-74695499bca8)
+
+![image](https://github.com/user-attachments/assets/91469147-b7fc-4b9e-837d-489e50bdc07b)
+
+![image](https://github.com/user-attachments/assets/8620669a-7724-4672-922e-4adb257bbf77)
+
+![image](https://github.com/user-attachments/assets/a35be245-7d35-4a01-a1a1-1f1d70029ca4)
+
+![image](https://github.com/user-attachments/assets/efd7135d-ce59-4d86-87b2-044e95fe4db0)
 
 
+## 발표 영상 및 apk 드라이브 링크
 
-
-
-
-
-
-
+https://drive.google.com/drive/folders/1zHPEI0ymtzBIZ_-cS-nhM1d9RmPeAide?usp=sharing
