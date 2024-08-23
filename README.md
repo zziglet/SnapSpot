@@ -13,15 +13,15 @@
 
 
 * 개발 도구
- * 사용한 IDE: Android Studio
- * 버전: Android Studio 버전 정보 (Android Studio Jellyfish | 2023.3.1)
+  * 사용한 IDE: Android Studio
+  * 버전: Android Studio 버전 정보 (Android Studio Jellyfish | 2023.3.1)
 * SDK 및 플랫폼
- * 사용한 Android SDK 플랫폼 버전: Android 10.0(“Q”) (API 레벨 34)
+  * 사용한 Android SDK 플랫폼 버전: Android 10.0(“Q”) (API 레벨 34)
 * 하드웨어 환경:
- * 테스트에 사용한 emulator 정보: Medium Phone API 29
+  * 테스트에 사용한 emulator 정보: Medium Phone API 29
 * 빌드 및 배포 환경:
- * 빌드 도구: Gradle(Jbr-17)
- * 버전 관리 시스템: Git
+  * 빌드 도구: Gradle(Jbr-17)
+  * 버전 관리 시스템: Git
 
 
 ## 앱 시연
